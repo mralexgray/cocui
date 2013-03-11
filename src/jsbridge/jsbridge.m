@@ -1,5 +1,4 @@
 #import "jsbridge.h"
-
 id cu_js_forward_invocation(id target, NSString *name, NSArray *args, BOOL strict) {
 	//NSLog(@"invokeUndefinedMethodFromWebScript:%@ withArguments:%@", name, args);
 	NSString *selname = name; // todo transpose js -> objc

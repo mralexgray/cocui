@@ -1,5 +1,4 @@
 #import "CUImageView.h"
-
 @interface CUManagerApp : NSObject {
 	// required
 	IBOutlet NSTextField *name;
@@ -19,8 +18,6 @@
 	
 	NSUserDefaults *defaults;
 }
-
 -(IBAction)create:(id)sender;
 -(IBAction)clear:(id)sender;
-
 @end

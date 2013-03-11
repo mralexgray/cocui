@@ -1,7 +1,5 @@
 #import <WebKit/WebView.h>
-
 @class WebNodeHighlight;
-
 @interface WebInspectorWindowController : NSWindowController /*<NSWindowDelegate>*/
 {
 	WebView *_inspectedWebView;
@@ -12,7 +10,6 @@
 	BOOL _visible;
 	BOOL _movingWindows;
 }
-
 - (id)init;
 - (id)initWithInspectedWebView:(id)webView;
 - (void)dealloc;
@@ -35,5 +32,4 @@
 - (void)toggleDebuggingJavaScript:(id)arg1;
 - (void)toggleProfilingJavaScript:(id)arg1;
 - (BOOL)validateUserInterfaceItem:(id)arg1;
-
 @end

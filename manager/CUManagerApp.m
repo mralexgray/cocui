@@ -1,8 +1,6 @@
 #import "CUManagerApp.h"
 #import "IconFamily.h"
-
 @implementation CUManagerApp
-
 - (void)awakeFromNib {
 	defaults = [NSUserDefaults standardUserDefaults];
 	documentTypes = [NSMutableArray array];
@@ -17,16 +15,13 @@
 		[icon setImage:[NSImage imageNamed:@"NSApplicationIcon"]];
 	}
 }
-
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	// write defaults
 	[defaults setObject:[[locationPath URL] path] forKey:@"locationPath"];
 }
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	NSLog(@"started");
 }
-
 -(IBAction)create:(id)sender {
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSMutableString *errorMessage = [NSMutableString string];
@@ -218,7 +213,6 @@
 	[self clear:self];
 }
 
-
 -(IBAction)clear:(id)sender {
 	[name setStringValue:@""];
 	[uti setStringValue:@""];
@@ -227,5 +221,4 @@
 	icon.imageURL = nil;
 	[icon setImage:[NSImage imageNamed:@"NSApplicationIcon"]];
 }
-
 @end

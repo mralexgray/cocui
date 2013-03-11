@@ -1,10 +1,8 @@
 @class WebView;
-
 @interface WebInspector : NSObject
 {
     WebView *_webView;
 }
-
 - (id)initWithWebView:(id)arg1;
 - (void)webViewClosed;
 - (void)show:(id)arg1;
@@ -23,5 +21,4 @@
 - (void)close:(id)arg1;
 - (void)attach:(id)arg1;
 - (void)detach:(id)arg1;
-
 @end

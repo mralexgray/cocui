@@ -7,30 +7,23 @@
 //   http://iconfamily.sourceforge.net/
 //
 // Problems, shortcomings, and uncertainties that I'm aware of are flagged with "NOTE:".  Please address bug reports, bug fixes, suggestions, etc. to the project Forums and bug tracker at https://sourceforge.net/projects/iconfamily/
-
 /*
     Copyright (c) 2001-2006 Troy N. Stephens
     Portions Copyright (c) 2007 Google Inc.
  
     Use and distribution of this source code is governed by the MIT License, whose terms are as follows.
-
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
 #import "IconFamily.h"
 #import "NSString+CarbonFSRefCreation.h"
-
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
 // This is defined in 10.5 and beyond in IconStorage.h
 enum {
   kIconServices512PixelDataARGB = 'ic09' /* non-premultiplied 512x512 ARGB bitmap*/
 };
 #endif
-
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_3
 // This is defined in 10.4 and beyond in IconStorage.h
 enum {
@@ -38,60 +31,43 @@ enum {
 };
 #endif
 
-
 @interface IconFamily (Internals)
-
 + (NSImage*) resampleImage:(NSImage*)image toIconWidth:(int)width usingImageInterpolation:(NSImageInterpolation)imageInterpolation;
-
 + (Handle) get32BitDataFromBitmapImageRep:(NSBitmapImageRep*)bitmapImageRep requiredPixelSize:(int)requiredPixelSize;
-
 + (Handle) get8BitDataFromBitmapImageRep:(NSBitmapImageRep*)bitmapImageRep requiredPixelSize:(int)requiredPixelSize;
-
 + (Handle) get8BitMaskFromBitmapImageRep:(NSBitmapImageRep*)bitmapImageRep requiredPixelSize:(int)requiredPixelSize;
-
 + (Handle) get1BitMaskFromBitmapImageRep:(NSBitmapImageRep*)bitmapImageRep requiredPixelSize:(int)requiredPixelSize;
-
 - (BOOL) addResourceType:(OSType)type asResID:(int)resID;
-
 @end
-
 @implementation IconFamily
-
 + (IconFamily*) iconFamily
 {
     return [[[IconFamily alloc] init] autorelease];
 }
-
 + (IconFamily*) iconFamilyWithContentsOfFile:(NSString*)path
 {
     return [[[IconFamily alloc] initWithContentsOfFile:path] autorelease];
 }
-
 + (IconFamily*) iconFamilyWithIconOfFile:(NSString*)path
 {
     return [[[IconFamily alloc] initWithIconOfFile:path] autorelease];
 }
-
 + (IconFamily*) iconFamilyWithIconFamilyHandle:(IconFamilyHandle)hNewIconFamily
 {
     return [[[IconFamily alloc] initWithIconFamilyHandle:hNewIconFamily] autorelease];
 }
-
 + (IconFamily*) iconFamilyWithSystemIcon:(int)fourByteCode
 {
     return [[[IconFamily alloc] initWithSystemIcon:fourByteCode] autorelease];
 }
-
 + (IconFamily*) iconFamilyWithThumbnailsOfImage:(NSImage*)image
 {
     return [[[IconFamily alloc] initWithThumbnailsOfImage:image] autorelease];
 }
-
 + (IconFamily*) iconFamilyWithThumbnailsOfImage:(NSImage*)image usingImageInterpolation:(NSImageInterpolation)imageInterpolation
 {
     return [[[IconFamily alloc] initWithThumbnailsOfImage:image usingImageInterpolation:imageInterpolation] autorelease];
 }
-
 // This is IconFamily's designated initializer.  It creates a new IconFamily that initially has no elements.
 //
 // The proper way to do this is to simply allocate a zero-sized handle (not to be confused with an empty handle) and assign it to hIconFamily.  This technique works on Mac OS X 10.2 as well as on 10.0.x and 10.1.x.  Our previous technique of allocating an IconFamily struct with a resourceSize of 0 no longer works as of Mac OS X 10.2.
@@ -107,7 +83,6 @@ enum {
     }
     return self;
 }
-
 - initWithContentsOfFile:(NSString*)path
 {
     FSRef ref;
@@ -131,7 +106,6 @@ enum {
     }
     return self;
 }
-
 - initWithIconFamilyHandle:(IconFamilyHandle)hNewIconFamily
 {
     self = [self init];
@@ -144,14 +118,12 @@ enum {
     }
     return self;
 }
-
 - initWithIconOfFile:(NSString*)path
 {
     IconRef	iconRef;
     OSStatus	result;
     SInt16	label;
     FSRef	ref;
-
     self = [self init];
     if (self)
     {
@@ -160,13 +132,11 @@ enum {
             DisposeHandle( (Handle)hIconFamily );
             hIconFamily = NULL;
         }
-
         if( ![path getFSRef:&ref createFileIfNecessary:NO] )
         {
             [self autorelease];
             return nil;
         }
-
         result = GetIconRefFromFileInfo(
                                         &ref,
                                         /*inFileNameLength*/ 0,
@@ -176,20 +146,16 @@ enum {
                                         kIconServicesNormalUsageFlag,
                                         &iconRef,
                                         &label );
-
         if (result != noErr)
         {
             [self autorelease];
             return nil;
         }
-
         result = IconRefToIconFamily(
                                      iconRef,
                                      kSelectorAllAvailableData,
                                      &hIconFamily );
-
         ReleaseIconRef( iconRef );
-
         if (result != noErr || !hIconFamily)
         {
             [self autorelease];
@@ -198,12 +164,10 @@ enum {
     }
     return self;
 }
-
 - initWithSystemIcon:(int)fourByteCode
 {
     IconRef	iconRef;
     OSErr	result;
-
     self = [self init];
     if (self)
     {
@@ -212,37 +176,30 @@ enum {
             DisposeHandle( (Handle)hIconFamily );
             hIconFamily = NULL;
         }
-
         result = GetIconRef(kOnSystemDisk, kSystemIconsCreator, fourByteCode, &iconRef);
-
         if (result != noErr)
         {
             [self autorelease];
             return nil;
         }
-
         result = IconRefToIconFamily(
                                      iconRef,
                                      kSelectorAllAvailableData,
                                      &hIconFamily );
-
         if (result != noErr || !hIconFamily)
         {
             [self autorelease];
             return nil;
         }
-
         ReleaseIconRef( iconRef );
     }
     return self;
 }
-
 - initWithThumbnailsOfImage:(NSImage*)image
 {
     // The default is to use a high degree of antialiasing, producing a smooth image.
     return [self initWithThumbnailsOfImage:image usingImageInterpolation:NSImageInterpolationHigh];
 }
-
 - initWithThumbnailsOfImage:(NSImage*)image usingImageInterpolation:(NSImageInterpolation)imageInterpolation
 {
     NSImage* iconImage512x512;
@@ -256,7 +213,6 @@ enum {
     NSBitmapImageRep* iconBitmap128x128;
     NSBitmapImageRep* iconBitmap32x32;
     NSBitmapImageRep* iconBitmap16x16;
-
     // Start with a new, empty IconFamily.
     self = [self init];
     if (self == nil)
@@ -361,13 +317,11 @@ enum {
     // Return the new icon family!
     return self;
 }
-
 - (void) dealloc
 {
     DisposeHandle( (Handle)hIconFamily );
     [super dealloc];
 }
-
 - (NSBitmapImageRep*) bitmapImageRepWithAlphaForIconFamilyElement:(OSType)elementType;
 {
     NSBitmapImageRep* bitmapImageRep;
@@ -383,7 +337,6 @@ enum {
     unsigned long* pRawBitmapDataEnd;
     unsigned char* pRawMaskData;
     unsigned char* pBitmapImageRepBitmapData;
-
     // Make sure elementType is a valid type that we know how to handle, and
     // figure out the dimensions and bit depth of the bitmap for that type.
     switch (elementType) {
@@ -394,7 +347,6 @@ enum {
         pixelsWide = 512;
         break;
 #endif
-
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
 	// 'ic08' 256x256 32-bit ARGB image
 	case kIconServices256PixelDataARGB:
@@ -408,7 +360,6 @@ enum {
 		maskElementType = kThumbnail8BitMask;
 		pixelsWide = 128;
 	    break;
-
 	// 'ih32' 48x48 32-bit RGB image
 	case kHuge32BitData:
 		maskElementType = kHuge8BitMask;
@@ -420,7 +371,6 @@ enum {
 		maskElementType = kLarge8BitMask;
 		pixelsWide = 32;
 	    break;
-
 	// 'is32' 16x16 32-bit RGB image
 	case kSmall32BitData:
 		maskElementType = kSmall8BitMask;
@@ -430,7 +380,6 @@ enum {
 	default:
 	    return nil;
     }
-
     // Get the raw, uncompressed bitmap data for the requested element.
     hRawBitmapData = NewHandle( pixelsWide * pixelsWide * 4 );
     result = GetIconFamilyData( hIconFamily, elementType, hRawBitmapData );
@@ -550,38 +499,31 @@ enum {
     DisposeHandle( hRawBitmapData );
     if (hRawMaskData)
         DisposeHandle( hRawMaskData );
-
     // Return nil if the NSBitmapImageRep didn't give us a buffer to copy into.
     if (pBitmapImageRepBitmapData == NULL)
         return nil;
-
     // Return the new NSBitmapImageRep.
     return bitmapImageRep;
 }
-
 - (NSImage*) imageWithAllReps
 {
     NSImage* image = NULL;
     image = [[[NSImage alloc] initWithData:[NSData dataWithBytes:*hIconFamily length:GetHandleSize((Handle)hIconFamily)]] autorelease];
     return image;
 }
-
 - (BOOL) setIconFamilyElement:(OSType)elementType fromBitmapImageRep:(NSBitmapImageRep*)bitmapImageRep
 {
     Handle hRawData = NULL;
     OSErr result;
-
     switch (elementType) {
       // 'ic08' 512x512 32-bit ARGB image
     case kIconServices512PixelDataARGB:
         hRawData = [IconFamily get32BitDataFromBitmapImageRep:bitmapImageRep requiredPixelSize:512];
         break;
-
     // 'ic08' 256x256 32-bit ARGB image
     case kIconServices256PixelDataARGB:
         hRawData = [IconFamily get32BitDataFromBitmapImageRep:bitmapImageRep requiredPixelSize:256];
         break;
-
     // 'it32' 128x128 32-bit RGB image
 	case kThumbnail32BitData:
 	    hRawData = [IconFamily get32BitDataFromBitmapImageRep:bitmapImageRep requiredPixelSize:128];
@@ -611,7 +553,6 @@ enum {
 	case kLarge8BitData:
 		hRawData = [IconFamily get8BitDataFromBitmapImageRep:bitmapImageRep requiredPixelSize:32];
 		break;
-
 	// 'is32' 16x16 32-bit RGB image
 	case kSmall32BitData:
 		hRawData = [IconFamily get32BitDataFromBitmapImageRep:bitmapImageRep requiredPixelSize:16];
@@ -626,7 +567,6 @@ enum {
 	case kSmall1BitMask:
 	    hRawData = [IconFamily get1BitMaskFromBitmapImageRep:bitmapImageRep requiredPixelSize:16];
 	    break;
-
 	// 'ics8' 16x16 8-bit indexed image data
 	case kSmall8BitData:
 		hRawData = [IconFamily get8BitDataFromBitmapImageRep:bitmapImageRep requiredPixelSize:16];
@@ -655,12 +595,10 @@ enum {
 	
     return YES;
 }
-
 - (BOOL) setAsCustomIconForFile:(NSString*)path
 {
     return( [self setAsCustomIconForFile:path withCompatibility:NO] );
 }
-
 - (BOOL) setAsCustomIconForFile:(NSString*)path withCompatibility:(BOOL)compat
 {
     FSRef targetFileFSRef;
@@ -675,7 +613,6 @@ enum {
 	
     // Before we do anything, get the original modification time for the target file.
     NSDate* modificationDate = [[[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:NO] objectForKey:NSFileModificationDate];
-
 	if ([path isAbsolutePath])
 		parentDirectory = [path stringByDeletingLastPathComponent];
     else
@@ -691,7 +628,6 @@ enum {
 	NSString *filenameString = [path lastPathComponent];
 	filename.length = [filenameString length];
 	[filenameString getCharacters:filename.unicode];
-
     // Make sure the file has a resource fork that we can open.  (Although
     // this sounds like it would clobber an existing resource fork, the Carbon
     // Resource Manager docs for this function say that's not the case.  If
@@ -790,7 +726,6 @@ enum {
     // Now set the modification time back to when the file was actually last modified.
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:modificationDate, NSFileModificationDate, nil];
     [[NSFileManager defaultManager] changeFileAttributes:attributes atPath:path];
-
     // Notify the system that the directory containing the file has changed, to
     // give Finder the chance to find out about the file's new custom icon.
     result = FNNotify( &parentDirectoryFSRef, kFNDirectoryModifiedMessage, kNilOptions );
@@ -799,7 +734,6 @@ enum {
 	
     return YES;
 }
-
 + (BOOL) removeCustomIconFromFile:(NSString*)path
 {
     FSRef targetFileFSRef;
@@ -809,7 +743,6 @@ enum {
     struct FSCatalogInfo catInfo;
     struct FileInfo *finderInfo = (struct FileInfo *)&catInfo.finderInfo;
     Handle hExistingCustomIcon;
-
     // Get an FSRef for the target file.
     if (![path getFSRef:&targetFileFSRef createFileIfNecessary:NO])
         return NO;
@@ -818,18 +751,15 @@ enum {
     file = FSOpenResFile( &targetFileFSRef, fsRdWrPerm );
     if (file == -1)
         return NO;
-
     // Remove the file's existing kCustomIconResource of type kIconFamilyType
     // (if any).
     hExistingCustomIcon = GetResource( kIconFamilyType, kCustomIconResource );
     if( hExistingCustomIcon )
         RemoveResource( hExistingCustomIcon );
-
     // Close the file's resource fork, flushing the resource map out to disk.
     CloseResFile( file );
     if (ResError() != noErr)
         return NO;
-
     // Now we need to set the file's Finder info so the Finder will know that
     // it has no custom icon. Start by getting the file's current Finder info.
     // Also get an FSRef for its parent directory, that we can use in the
@@ -843,15 +773,12 @@ enum {
                               &parentDirectoryFSRef );
     if (result != noErr)
         return NO;
-
     // Clear the kHasCustomIcon flag and the kHasBeenInited flag.
     finderInfo->finderFlags = finderInfo->finderFlags & ~(kHasCustomIcon | kHasBeenInited);
-
     // Now write the Finder info back.
     result = FSSetCatalogInfo( &targetFileFSRef, kFSCatInfoFinderInfo, &catInfo );
     if (result != noErr)
         return NO;
-
     // Notify the system that the directory containing the file has changed, to give Finder the chance to find out about the file's new custom icon.
     result = FNNotify( &parentDirectoryFSRef, kFNDirectoryModifiedMessage, kNilOptions );
     if (result != noErr)
@@ -859,12 +786,10 @@ enum {
 	
     return YES;
 }
-
 - (BOOL) setAsCustomIconForDirectory:(NSString*)path
 {
     return [self setAsCustomIconForDirectory:path withCompatibility:NO];
 }
-
 - (BOOL) setAsCustomIconForDirectory:(NSString*)path withCompatibility:(BOOL)compat
 {
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -878,16 +803,13 @@ enum {
     struct FSCatalogInfo catInfo;
     Handle hExistingCustomIcon;
     Handle hIconFamilyCopy;
-
     // Confirm that "path" exists and specifies a directory.
     exists = [fm fileExistsAtPath:path isDirectory:&isDir];
     if( !isDir || !exists )
         return NO;
-
     // Get an FSRef for the folder.
     if( ![path getFSRef:&targetFolderFSRef createFileIfNecessary:NO] )
         return NO;
-
     // Remove and re-create any existing "Icon\r" file in the directory, and get an FSRef for it.
     iconrPath = [path stringByAppendingPathComponent:@"Icon\r"];
     if( [fm fileExistsAtPath:iconrPath] )
@@ -897,7 +819,6 @@ enum {
     }
     if( ![iconrPath getFSRef:&iconrFSRef createFileIfNecessary:YES] )
         return NO;
-
     // Get type and creator information for the Icon file.
     result = FSGetCatalogInfo(
                               &iconrFSRef,
@@ -908,17 +829,13 @@ enum {
                               /*parentRef*/ NULL );
     if( result == fnfErr ) {
         // The file doesn't exist. Prepare to create it.
-
         struct FileInfo *finderInfo = (struct FileInfo *)catInfo.finderInfo;
-
         // These are the file type and creator given to Icon files created by
         // the Finder.
         finderInfo->fileType = 'icon';
         finderInfo->fileCreator = 'MACS';
-
         // Icon files should be invisible.
         finderInfo->finderFlags = kIsInvisible;
-
         // Because the inited flag is not set in finderFlags above, the Finder
         // will ignore the location, unless it's in the 'magic rectangle' of
         // { -24,000, -24,000, -16,000, -16,000 } (technote TB42).
@@ -927,7 +844,6 @@ enum {
         // file visible for any reason, we don't want it to be positioned in an
         // exotic corner of the window.
         finderInfo->location.h = finderInfo->location.v = 0;
-
         // Standard reserved-field practice.
         finderInfo->reservedField = 0;
     } else if( result != noErr )
@@ -936,7 +852,6 @@ enum {
     // Get the filename, to be applied to the Icon file.
     filename.length = [@"Icon\r" length];
     [@"Icon\r" getCharacters:filename.unicode];
-
     // Make sure the file has a resource fork that we can open.  (Although
     // this sounds like it would clobber an existing resource fork, the Carbon
     // Resource Manager docs for this function say that's not the case.)
@@ -951,12 +866,10 @@ enum {
     result = ResError();
     if (!(result == noErr || result == dupFNErr))
         return NO;
-
     // Open the file's resource fork.
     file = FSOpenResFile( &iconrFSRef, fsRdWrPerm );
     if (file == -1)
         return NO;
-
     // Make a copy of the icon family data to pass to AddResource().
     // (AddResource() takes ownership of the handle we pass in; after the
     // CloseResFile() call its master pointer will be set to 0xffffffff.
@@ -968,22 +881,18 @@ enum {
         CloseResFile( file );
         return NO;
     }
-
     // Remove the file's existing kCustomIconResource of type kIconFamilyType
     // (if any).
     hExistingCustomIcon = GetResource( kIconFamilyType, kCustomIconResource );
     if( hExistingCustomIcon )
         RemoveResource( hExistingCustomIcon );
-
     // Now add our icon family as the file's new custom icon.
     AddResource( (Handle)hIconFamilyCopy, kIconFamilyType,
                  kCustomIconResource, "\p");
-
     if (ResError() != noErr) {
         CloseResFile( file );
         return NO;
     }
-
     if( compat )
     {
         [self addResourceType:kLarge8BitData asResID:kCustomIconResource];
@@ -991,13 +900,11 @@ enum {
         [self addResourceType:kSmall8BitData asResID:kCustomIconResource];
         [self addResourceType:kSmall1BitMask asResID:kCustomIconResource];
     }
-
     // Close the file's resource fork, flushing the resource map and new icon
     // data out to disk.
     CloseResFile( file );
     if (ResError() != noErr)
         return NO;
-
     result = FSGetCatalogInfo( &targetFolderFSRef,
                                kFSCatInfoFinderInfo,
                                &catInfo,
@@ -1006,16 +913,13 @@ enum {
                                /*parentRef*/ NULL);
     if( result != noErr )
         return NO;
-
     // Tell the Finder that the folder now has a custom icon.
     ((struct FolderInfo *)catInfo.finderInfo)->finderFlags = ( ((struct FolderInfo *)catInfo.finderInfo)->finderFlags | kHasCustomIcon ) & ~kHasBeenInited;
-
     result = FSSetCatalogInfo( &targetFolderFSRef,
                       kFSCatInfoFinderInfo,
                       &catInfo);
     if( result != noErr )
         return NO;
-
     // Notify the system that the target directory has changed, to give Finder
     // the chance to find out about its new custom icon.
     result = FNNotify( &targetFolderFSRef, kFNDirectoryModifiedMessage, kNilOptions );
@@ -1024,25 +928,18 @@ enum {
 	
     return YES;
 }
-
 - (BOOL) writeToFile:(NSString*)path
 {
     NSData* iconData = nil;
-
 //    HLock((Handle)hIconFamily); // Handle-based memory isn't compacted anymore, so calling HLock()/HUnlock() is unnecessary.
     
     iconData = [NSData dataWithBytes:*hIconFamily length:GetHandleSize((Handle)hIconFamily)];
     BOOL success = [iconData writeToFile:path atomically:NO];
-
 //    HUnlock((Handle)hIconFamily); // Handle-based memory isn't compacted anymore, so calling HLock()/HUnlock() is unnecessary.
-
     return success;
 }
-
 @end
-
 @implementation IconFamily (Internals)
-
 + (NSImage*) resampleImage:(NSImage*)image toIconWidth:(int)iconWidth usingImageInterpolation:(NSImageInterpolation)imageInterpolation
 {
     NSGraphicsContext* graphicsContext;
@@ -1054,7 +951,6 @@ enum {
     NSSize size, pixelSize, newSize;
     NSRect iconRect;
     NSRect targetRect;
-
     // Create a working copy of the image and scale its size down to fit in
     // the square area of the icon.
     //
@@ -1084,7 +980,6 @@ enum {
         newSize.width  = floor( (float) iconWidth * size.width / size.height + 0.5 );
     }
     [workingImage setSize:newSize];
-
     // Create a new image the size of the icon, and clear it to transparent.
     newImage = [[NSImage alloc] initWithSize:NSMakeSize(iconWidth,iconWidth)];
     [newImage lockFocus];
@@ -1092,7 +987,6 @@ enum {
     iconRect.size.width = iconRect.size.height = iconWidth;
     [[NSColor clearColor] set];
     NSRectFill( iconRect );
-
     // Set current graphics context to use antialiasing and high-quality
     // image scaling.
     graphicsContext = [NSGraphicsContext currentContext];
@@ -1107,19 +1001,15 @@ enum {
     targetRect.size.width = newSize.width;
     targetRect.size.height = newSize.height;
     [workingImageRep drawInRect:targetRect];
-
     // Restore previous graphics context settings.
     [graphicsContext setShouldAntialias:wasAntialiasing];
     [graphicsContext setImageInterpolation:previousImageInterpolation];
-
     [newImage unlockFocus];
 	
     [workingImage release];
-
     // Return the new image!
     return [newImage autorelease];
 }
-
 + (Handle) get32BitDataFromBitmapImageRep:(NSBitmapImageRep*)bitmapImageRep requiredPixelSize:(int)requiredPixelSize
 {
     Handle hRawData;
@@ -1140,7 +1030,6 @@ enum {
     BOOL isPlanar       = [bitmapImageRep isPlanar];
     int bytesPerRow     = [bitmapImageRep bytesPerRow];
     unsigned char* bitmapData = [bitmapImageRep bitmapData];
-
     // Make sure bitmap has the required dimensions.
     if (pixelsWide != requiredPixelSize || pixelsHigh != requiredPixelSize)
 	return NULL;
@@ -1158,7 +1047,6 @@ enum {
 		NSLog(@"get32BitDataFromBitmapImageRep:requiredPixelSize: returning NULL due to bitsPerSample == %d", bitsPerSample);
 		return NULL;
 	}
-
 	if (((samplesPerPixel == 3) && (bitsPerPixel == 24)) || ((samplesPerPixel == 4) && (bitsPerPixel == 32)))
 	{
 		rawDataSize = pixelsWide * pixelsHigh * 4;
@@ -1210,10 +1098,8 @@ enum {
 		NSLog(@"get32BitDataFromBitmapImageRep:requiredPixelSize: returning NULL due to samplesPerPixel == %d, bitsPerPixel == %", samplesPerPixel, bitsPerPixel);
 		return NULL;
 	}
-
     return hRawData;
 }
-
 + (Handle) get8BitDataFromBitmapImageRep:(NSBitmapImageRep*)bitmapImageRep requiredPixelSize:(int)requiredPixelSize
 {
     Handle hRawData;
@@ -1254,7 +1140,6 @@ enum {
 	{
 		CGDirectPaletteRef cgPal;
 		CGDeviceColor cgCol;
-
 		rawDataSize = pixelsWide * pixelsHigh;
 		hRawData = NewHandle( rawDataSize );
 		if (hRawData == NULL)
@@ -1303,7 +1188,6 @@ enum {
 	
     return hRawData;
 }
-
 + (Handle) get8BitMaskFromBitmapImageRep:(NSBitmapImageRep*)bitmapImageRep requiredPixelSize:(int)requiredPixelSize
 {
     Handle hRawData;
@@ -1322,7 +1206,6 @@ enum {
     BOOL isPlanar       = [bitmapImageRep isPlanar];
     int bytesPerRow     = [bitmapImageRep bytesPerRow];
     unsigned char* bitmapData = [bitmapImageRep bitmapData];
-
     // Make sure bitmap has the required dimensions.
     if (pixelsWide != requiredPixelSize || pixelsHigh != requiredPixelSize)
 		return NULL;
@@ -1376,10 +1259,8 @@ enum {
 		NSLog(@"get8BitMaskFromBitmapImageRep:requiredPixelSize: returning NULL due to samplesPerPixel == %d, bitsPerPixel == %", samplesPerPixel, bitsPerPixel);
 		return NULL;
 	}
-
     return hRawData;
 }
-
 // NOTE: This method hasn't been fully tested yet.
 + (Handle) get1BitMaskFromBitmapImageRep:(NSBitmapImageRep*)bitmapImageRep requiredPixelSize:(int)requiredPixelSize
 {
@@ -1480,27 +1361,19 @@ enum {
 	
     return hRawData;
 }
-
 - (BOOL) addResourceType:(OSType)type asResID:(int)resID 
 {
     Handle hIconRes = NewHandle(0);
     OSErr err;
-
     err = GetIconFamilyData( hIconFamily, type, hIconRes );
-
     if( !GetHandleSize(hIconRes) || err != noErr )
         return NO;
-
     AddResource( hIconRes, type, resID, "\p" );
-
     return YES;
 }
-
 @end
-
 // Methods for interfacing with the Carbon Scrap Manager (analogous to and
 // interoperable with the Cocoa Pasteboard).
-
 @implementation IconFamily (ScrapAdditions)
 /**
 + (BOOL) canInitWithScrap
@@ -1510,61 +1383,45 @@ enum {
     UInt32 numInfos = 0;
     int i = 0;
     BOOL canInit = NO;
-
     GetCurrentScrap(&scrap);
-
     GetScrapFlavorCount(scrap,&numInfos);
     scrapInfos = malloc( sizeof(ScrapFlavorInfo)*numInfos );
     if (scrapInfos) {
       GetScrapFlavorInfoList(scrap, &numInfos, scrapInfos);
-
       for( i=0; i<numInfos; i++ )
       {
           if( scrapInfos[i].flavorType == 'icns' )
               canInit = YES;
       }
-
       free( scrapInfos );
     }
-
     return canInit;
 }
-
 + (IconFamily*) iconFamilyWithScrap
 {
     return [[[IconFamily alloc] initWithScrap] autorelease];
 }
-
 - initWithScrap
 {
     Handle storageMem = NULL;
     Size amountMem = 0;
     ScrapRef scrap;
-
     self = [super init];
-
     if( self )
     {
         GetCurrentScrap(&scrap);
-
         GetScrapFlavorSize( scrap, 'icns', &amountMem );
-
         storageMem = NewHandle(amountMem);
-
         GetScrapFlavorData( scrap, 'icns', &amountMem, *storageMem );
-
         hIconFamily = (IconFamilyHandle)storageMem;
     }
     return self;
 }
-
 - (BOOL) putOnScrap
 {
     ScrapRef scrap = NULL;
-
     ClearCurrentScrap();
     GetCurrentScrap(&scrap);
-
 //    HLock((Handle)hIconFamily); // Handle-based memory isn't compacted anymore, so calling HLock()/HUnlock() is unnecessary.
     PutScrapFlavor( scrap, 'icns', kScrapFlavorMaskNone, GetHandleSize((Handle)hIconFamily), *hIconFamily);
 //    HUnlock((Handle)hIconFamily); // Handle-based memory isn't compacted anymore, so calling HLock()/HUnlock() is unnecessary.
@@ -1572,5 +1429,4 @@ enum {
 }
 */
 @end
-
 
