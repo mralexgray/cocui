@@ -1,4 +1,0 @@
-
-@interface EVWebView : WebView {
-}
-@end
