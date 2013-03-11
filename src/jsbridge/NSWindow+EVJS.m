@@ -1,14 +1,10 @@
 #import "jsbridge.h"
-
 @implementation NSWindow (EVJS)
-
 CUJS_EXPOSE_THIS_CLASS;
 CUJS_TRANSPOND_NAMES_PLAIN;
-
 - (EVRect *)_frame {
 	return [[EVRect alloc] initWithNSRect:[self frame]];
 }
-
 - (void)set_frame:(id)frame {
 	// input nodes might be an EVRect/EVPoint/EVSize or a WebScriptObjects'
 	id origin = [frame valueForKey:@"origin"];
@@ -18,21 +14,16 @@ CUJS_TRANSPOND_NAMES_PLAIN;
 	//NSLog(@"%f, %f, %f, %f", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	[self setFrame:r display:YES animate:YES];
 }
-
-- (NSArray *)position {
+- (NSA*)position {
 	NSRect r = [self frame];
 	return @[[NSNumber numberWithFloat:r.origin.x], [NSNumber numberWithFloat:r.origin.y]];
 }
-
-- (id)invokeDefaultMethodWithArguments:(NSArray *)args {
+- (id)invokeDefaultMethodWithArguments:(NSA*)args {
 	NSLog(@"self invoked");
 	return nil;
 }
-
-- (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSArray *)args {
+- (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSA*)args {
 	//NSLog(@"undefined invoked: %@(%@)", name, args);
 	return nil;
 }
-
 @end
-

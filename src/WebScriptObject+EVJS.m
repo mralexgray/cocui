@@ -1,27 +1,23 @@
 
 #import "WebScriptObject+EVJS.h"
-
 @implementation WebScriptObject (EVJS)
 
-
-- (id)invokeWithArguments:(NSArray *)args inContext:(JSContextRef)jctx {
+- (id)invokeWithArguments:(NSA*)args inContext:(JSContextRef)jctx
+{
 	JSObjectRef jobj = [self JSObject];
 	JSValueRef *arguments, exception, retval;
 	size_t i, count;
 	
-	if (!jobj || !JSObjectIsFunction(jctx, jobj))
-		return NULL;
-	
-	count = [args count];
+	if (!jobj || !JSObjectIsFunction(jctx, jobj))	return NULL;
+	count = args.count;
 	arguments = calloc(count, sizeof(JSValueRef));
 	
 	for (i = 0; i < count; i++) {
 		id arg = args[i];
-		if ([arg isMemberOfClass:[NSNumber class]]) {
+		if ([arg isMemberOfClass:NSN.class])
 			arguments[i] = JSValueMakeNumber(jctx, [arg doubleValue]);
-		}
 		else {
-			if (![arg isMemberOfClass:[NSString class]])
+			if (![arg isMemberOfClass:NSS.class])
 				arg = [arg description];
 			arguments[i] = JSValueMakeString(jctx, JSStringCreateWithCFString((CFStringRef)arg));
 		}
@@ -37,19 +33,14 @@
 			  JSStringCopyCFString(kCFAllocatorDefault, JSValueToStringCopy(jctx, exception, &exception)));
 		return NULL;
 	}
-	
 	return [isa cocoaRepresentationOfJSValue:retval inContext:jctx];
 }
-
-
 - (id)cocoaRepresentationInContext:(JSContextRef)ctx {
 	return [isa cocoaRepresentationOfJSValue:[self JSObject] inContext:ctx];
 }
-
 - (NSString *)JSONRepresentationInContext:(JSContextRef)ctx {
 	return [isa JSONRepresentationOfJSValue:[self JSObject] inContext:ctx];
 }
-
 
 + (NSString *)JSONRepresentationOfJSValue:(JSValueRef)o inContext:(JSContextRef)ctx {
 	JSType t = JSValueGetType(ctx, (JSValueRef)o);
@@ -131,7 +122,6 @@
 	return nil;
 }
 
-
 + (id)cocoaRepresentationOfJSValue:(JSValueRef)o inContext:(JSContextRef)ctx {
 	JSType t = JSValueGetType(ctx, (JSValueRef)o);
 	id v = nil;
@@ -206,6 +196,5 @@
 	
 	return v;
 }
-
 
 @end

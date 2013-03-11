@@ -1,26 +1,18 @@
 #import "jsbridge.h"
 #import "WebScriptObject+EVJS.h"
 #import "NSDictionary+CUAdditions.h"
-
 #import <ApplicationServices/ApplicationServices.h>
-
 #import "EVApp.h"
 #import "CUApp.h"
 #import "CUWindow.h"
-
 @implementation CUApp
-
 @synthesize version, defaults, defaultsController, webView;
-
 // callbacks
 @synthesize onOpenFiles;
-
 // some:thing -> some_thing()
 CUJS_TRANSPOND_NAMES_PLAIN
-
 // allow access to all properties
 + (BOOL)isKeyExcludedFromWebScript:(const char *)name { return NO; }
-
 // disallow some selectors
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel {
 	if ( sel == @selector(initWithWebPreferences:)
@@ -28,7 +20,6 @@ CUJS_TRANSPOND_NAMES_PLAIN
 		return YES;
 	return NO;
 }
-
 
 -(id)initWithWebPreferences:(WebPreferences *)preferences {
 	self = [super init];
@@ -40,7 +31,6 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	[[webView windowScriptObject] setValue:self forKey:kCUAppWebScriptNamespace];
 	return self;
 }
-
 
 -(id)evaluateWebScript:(NSString *)js errorDesc:(NSString **)errdesc {
 	JSContextRef ctx = [[webView mainFrame] globalContext];
@@ -57,21 +47,17 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	//return [[webView windowScriptObject] evaluateWebScript:js];
 }
 
-
 -(void)terminate {
 	[g_app terminate:self];
 }
-
 
 -(NSString *)encodeJSON:(WebScriptObject *)obj {
 	return [obj JSONRepresentationInContext:[[webView mainFrame] globalContext]];
 }
 
-
 -(NSString *)decodeJSON:(WebScriptObject *)obj {
 	return [[webView windowScriptObject] evaluateWebScript:[NSString stringWithFormat:@"(%@)", obj]];
 }
-
 
 /*
  Arguments:
@@ -251,11 +237,9 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	return win.win;
 }
 
-
 -(BOOL)fullscreen {
 	return fullscreen != -1 ? YES : NO;
 }
-
 
 -(void)setFullscreen:(BOOL)b {
 	if (b)
@@ -263,7 +247,6 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	else
 		[self exitFullscreen];
 }
-
 
 -(BOOL)enterFullscreen:(CGDirectDisplayID)screenID {
 	if (fullscreen == -1) {
@@ -278,7 +261,6 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	}
 	return NO;
 }
-
 -(CGDirectDisplayID)exitFullscreen {
 	CGDirectDisplayID sid = fullscreen;
 	if (fullscreen != -1 && [self exitFullscreen:fullscreen]) {
@@ -287,7 +269,6 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	}
 	return -1;
 }
-
 -(BOOL)exitFullscreen:(CGDirectDisplayID)screenID {
 	if (CGDisplayRelease(screenID) == kCGErrorSuccess) {
 		if (screenID == fullscreen)
@@ -300,17 +281,13 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	return NO;
 }
 
-
-
 #pragma mark -
 #pragma mark WebUIDelegate methods
-
-/*- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+/*- (NSA*)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSA*)defaultMenuItems
  {
  // disable contextual menu for the webView
  return nil;
  }*/
-
 /*
  This method is invoked when the dragged content is dropped and the sender is about to perform the source action. Invoked after the last invocation of the webView:dragSourceActionMaskForPoint: method. Gives the delegate an opportunity to modify the contents of the object on pasteboard before completing the source action.
  */
@@ -318,24 +295,19 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	NSLog(@"dropping %@", pasteboard);
 }
 
-
 - (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)frame {
 	//NSLog(@"ALERT [%@] %@", frame, message);
 	//NSBeginInformationalAlertSheet(@"Notice", nil, nil, nil, [sender window], nil, NULL, NULL, NULL, message);
 	[NSAlert alertWithMessageText:@"Alert" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:message, nil];
 }
 
-
-/*- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems {
+/*- (NSA*)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSA*)defaultMenuItems {
  return defaultMenuItems;
  }*/
 
-
 // Unofficial:
-
 - (void)webView:(WebView *)sender addMessageToConsole:(NSDictionary *)m {
 	[g_app dlog:@"[%@:%@] %@", m[@"sourceURL"], m[@"lineNumber"], m[@"message"]];
 }
-
 
 @end

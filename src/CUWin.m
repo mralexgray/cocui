@@ -1,11 +1,8 @@
 #import "CUWin.h"
 #import "jsbridge.h"
-
 @implementation CUWin
-
 CUJS_TRANSPOND_NAMES_PLAIN
 CUJS_FORWARD_INVOCATION_TO(win)
-
 
 + (BOOL)isKeyExcludedFromWebScript:(const char *)name { return NO; }
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel {
@@ -14,7 +11,6 @@ CUJS_FORWARD_INVOCATION_TO(win)
 	return NO;
 }
 
-
 -(id)initWithWindow:(CUWindow *)w {
 	self = [super init];
 	win = w;
@@ -22,26 +18,21 @@ CUJS_FORWARD_INVOCATION_TO(win)
 	return self;
 }
 
-
 -(NSString *)valueOf {
 	return [self description];
 }
-
 
 -(WebScriptObject *)window {
 	return [[win.webView mainFrame] windowObject];
 }
 
-
 -(WebScriptObject *)document {
 	return [[[win.webView mainFrame] windowObject] valueForKey:@"document"];
 }
 
-
 - (EVRect *)frame {
 	return [[EVRect alloc] initWithNSRect:[win frame]];
 }
-
 
 - (void)setFrame:(id)f {
 	id origin = [f valueForKey:@"origin"];
@@ -51,17 +42,14 @@ CUJS_FORWARD_INVOCATION_TO(win)
 	[win setFrame:r display:YES animate:YES];
 }
 
-
-/*- (NSArray *)position {
+/*- (NSA*)position {
 	NSRect r = [self frame];
 	return [NSArray arrayWithObjects:[NSNumber numberWithFloat:r.origin.x], [NSNumber numberWithFloat:r.origin.y], nil];
 }*/
 
-
 -(BOOL)fullscreen {
 	return fullscreen != -1 ? YES : NO;
 }
-
 
 -(void)setFullscreen:(BOOL)b {
 	if (b && fullscreen == -1) {
@@ -87,21 +75,17 @@ CUJS_FORWARD_INVOCATION_TO(win)
 	}
 }
 
-
 -(BOOL)shadow {
 	return [win hasShadow];
 }
-
 
 -(void)setShadow:(BOOL)b {
 	return [win setHasShadow:b];
 }
 
-
 -(NSString *)level {
 	return @([CUWindow windowLevelNameForLevel:[win level]]);
 }
-
 
 -(void)setLevel:(id)s {
 	CGWindowLevelKey d = [CUWindow windowLevelKeyFromNameOrNumber:s];
@@ -116,7 +100,5 @@ CUJS_FORWARD_INVOCATION_TO(win)
 		[obj setException:[NSString stringWithFormat:@"Invalid window level %@", [s description]]];
 	}
 }
-
-
 
 @end

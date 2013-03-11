@@ -2,10 +2,8 @@
 #import "CUWin.h"
 #import "CUWindow.h"
 #import "jsbridge.h"
-
 #import "webkit-private/WebInspector.h"
 #import "webkit-private/WebInspectorWindowController.h"
-
 const char *kCUWindowLevelNames[] = {
 	"Base",
 	"Minimum",
@@ -29,7 +27,6 @@ const char *kCUWindowLevelNames[] = {
 	"Cursor",
 	"AssistiveTechHigh"
 };
-
 const CGWindowLevelKey kCUWindowLevelKeys[] = {
 	kCGBaseWindowLevelKey,
 	kCGMinimumWindowLevelKey,
@@ -53,14 +50,10 @@ const CGWindowLevelKey kCUWindowLevelKeys[] = {
 	kCGCursorWindowLevelKey,
 	kCGAssistiveTechHighWindowLevelKey
 };
-
 @implementation CUWindow
-
 CUJS_EXPOSE_THIS_CLASS
 CUJS_TRANSPOND_NAMES_PLAIN
-
 @synthesize webView, app, win;
-
 
 +(const char *)windowLevelNameForLevel:(CGWindowLevel)level {
 	if (level >= 0 && level < kCGNumberOfWindowLevelKeys) {
@@ -70,7 +63,6 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	}
 	return NULL;
 }
-
 
 +(CGWindowLevelKey)windowLevelKeyFromNameOrNumber:(id)s {
 	if ([s respondsToSelector:@selector(UTF8String)]) {
@@ -90,7 +82,6 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	return -1;
 }
 
-
 -(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)styleMask defer:(BOOL)defer preferences:(WebPreferences *)webPrefs app:(CUApp *)_app
 {
 	app = _app;
@@ -107,12 +98,10 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	self.delegate = (id<NSWindowDelegate>)self;
 	return self;
 }
-
 -(void)loadURL:(NSURL *)url {
 	NSLog(@"loading %@ with %@", self, url);
 	[[webView mainFrame] loadRequest:[NSURLRequest requestWithURL:url]];
 }
-
 -(WebInspector *)webInspector {
 	if (!webInspector)
 		webInspector = [[NSClassFromString(@"WebInspector") alloc] initWithWebView:webView];
@@ -121,12 +110,9 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	return webInspector;
 }
 
-
 #pragma mark -
 #pragma mark NSApplication delegate methods
-
 // forward notification as js events on document
-
 #define _DOMDOC [[webView mainFrame] DOMDocument]
 CUJS_FORWARD_NOTIFICATION_IM(windowDidBecomeKey, _DOMDOC)
 CUJS_FORWARD_NOTIFICATION_IM(windowDidBecomeMain, _DOMDOC)
@@ -145,10 +131,8 @@ CUJS_FORWARD_NOTIFICATION_IM(windowWillMiniaturize, _DOMDOC)
 CUJS_FORWARD_NOTIFICATION_IM(windowWillMove, _DOMDOC)
 #undef _DOMDOC
 
-
 #pragma mark -
 #pragma mark WebFrameLoadDelegate methods
-
 - (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame {
 	// expose our objects in javascript
 	WebScriptObject *root = [webView windowScriptObject];
@@ -161,12 +145,10 @@ CUJS_FORWARD_NOTIFICATION_IM(windowWillMove, _DOMDOC)
 	}
 }
 
-
 - (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame {
 	if (frame == [webView mainFrame])
 		[self setTitle:title];
 }
-
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
 	NSLog(@"[%@] loaded", frame);
@@ -175,7 +157,6 @@ CUJS_FORWARD_NOTIFICATION_IM(windowWillMove, _DOMDOC)
 		[g_app dlog:@"completed %@ %@ in %@", [req HTTPMethod], [req URL], frame];
 	}
 }
-
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
 	NSLog(@"[%@] failed to load: %@", frame, error);
 	if (g_app.developmentMode) {
@@ -184,16 +165,13 @@ CUJS_FORWARD_NOTIFICATION_IM(windowWillMove, _DOMDOC)
 	}
 }
 
-
 #pragma mark -
 #pragma mark WebUIDelegate methods
-
-/*- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+/*- (NSA*)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSA*)defaultMenuItems
  {
  // disable contextual menu for the webView
  return nil;
  }*/
-
 /*
  This method is invoked when the dragged content is dropped and the sender is about to perform the source action. Invoked after the last invocation of the webView:dragSourceActionMaskForPoint: method. Gives the delegate an opportunity to modify the contents of the object on pasteboard before completing the source action.
  */
@@ -201,28 +179,22 @@ CUJS_FORWARD_NOTIFICATION_IM(windowWillMove, _DOMDOC)
 	NSLog(@"dropping %@", pasteboard);
 }
 
-
 - (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)frame {
 	NSLog(@"ALERT [%@] %@", frame, message);
 	NSBeginInformationalAlertSheet(@"Notice", nil, nil, nil, [sender window], nil, NULL, NULL, NULL, message, nil);
 }
 
-
 -(BOOL)canBecomeKeyWindow {
 	return YES;
 }
 
-
-/*- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems {
+/*- (NSA*)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSA*)defaultMenuItems {
  return defaultMenuItems;
  }*/
 
-
 // Unofficial:
-
 - (void)webView:(WebView *)sender addMessageToConsole:(NSDictionary *)m {
 	[g_app dlog:@"[%@:%@] %@", m[@"sourceURL"], m[@"lineNumber"], m[@"message"]];
 }
-
 
 @end

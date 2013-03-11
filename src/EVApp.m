@@ -2,18 +2,14 @@
 #import "EVApp.h"
 #import "WebScriptObject+EVJS.h"
 #import "jsbridge.h"
-
 //#define WITH_FSCRIPT 1
 #if WITH_FSCRIPT
 	#import <FScript/FScript.h>
 #endif
-
 EVApp *g_app = NULL;
-
 
 #import "WebInspector.h"
 #import "WebInspectorWindowController.h"
-
 //@interface  WebInspectorWindowController ()
 //- (BOOL)windowShouldClose:(id)window;
 //@end
@@ -26,18 +22,14 @@ EVApp *g_app = NULL;
 //}
 //@end
 
-
 @implementation EVApp
-
 @synthesize developmentMode, jsapp, logPanel, logTextAttrs, logTextView;
 @synthesize webInspector, webInspectorWindowController;
-
 + (EVApp *)instance {
 	if (!g_app)
 		[[EVApp alloc] init];
 	return g_app;
 }
-
 
 - (id)init
 {
@@ -72,7 +64,6 @@ EVApp *g_app = NULL;
 	
 	return self;
 }
-
 - (void)awakeFromNib {
 	if (!g_app)
 		g_app = self;
@@ -90,14 +81,12 @@ EVApp *g_app = NULL;
 	}
 }
 
-
 - (void)dlog:(NSString *)format, ... {
 	va_list args;
 	va_start(args, format);
 	[self dlog:format args:args];
 	va_end(args);
 }
-
 
 - (void)dlog:(NSString *)format args:(va_list)args {
 	if (developmentMode) {
@@ -109,7 +98,6 @@ EVApp *g_app = NULL;
 	NSLogv(format, args);
 }
 
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// F-Script
 #if WITH_FSCRIPT
@@ -117,7 +105,6 @@ EVApp *g_app = NULL;
 #endif
 	[self loadMainScript];
 }
-
 
 -(void)loadMainScript {
 	NSString *mainsrc, *errDesc, *mainpath = [[NSBundle mainBundle] pathForResource:@"main" ofType:@"js"];
@@ -146,7 +133,6 @@ EVApp *g_app = NULL;
 	}
 }
 
-
 -(WebInspector *)webInspector {
 	if (!webInspector)
 		webInspector = [[NSClassFromString(@"WebInspector") alloc] initWithWebView:jsapp.webView];
@@ -155,10 +141,8 @@ EVApp *g_app = NULL;
 	return webInspector;
 }
 
-
 #pragma mark -
 #pragma mark UI actions
-
 
 -(WebInspector *)_frontmostWebInspector {
 	NSWindow *win = [self keyWindow];
@@ -167,33 +151,26 @@ EVApp *g_app = NULL;
 		return [(id)win webInspector];
 	return [self webInspector];
 }
-
 -(IBAction)showInspector:(id)sender {
 	[self dlog:@"displaying web inspector"];
 	[[self _frontmostWebInspector] show:webInspectorWindowController];
 }
-
 -(IBAction)showConsole:(id)sender {
 	[self dlog:@"displaying web inspector with console"];
 	[[self _frontmostWebInspector] showConsole:webInspectorWindowController];
 }
-
 -(IBAction)showMainConsole:(id)sender {
 	[self dlog:@"displaying web inspector with console"];
 	[[self webInspector] showConsole:webInspectorWindowController];
 }
-
 -(IBAction)reloadApp:(id)sender {
 	[self dlog:@"reloading main.js"];
 	[self loadMainScript];
 }
 
-
 #pragma mark -
 #pragma mark NSApplication delegate methods
-
 // forward notification as js events on document
-
 #define _DOMDOC [[jsapp.webView mainFrame] DOMDocument]
 CUJS_FORWARD_NOTIFICATION_IM(applicationWillBecomeActive, _DOMDOC)
 CUJS_FORWARD_NOTIFICATION_IM(applicationDidBecomeActive, _DOMDOC)
@@ -206,14 +183,11 @@ CUJS_FORWARD_NOTIFICATION_IM(applicationWillUnhide, _DOMDOC)
 CUJS_FORWARD_NOTIFICATION_IM(applicationDidUnhide, _DOMDOC)
 #undef _DOMDOC
 
-
-- (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
+- (void)application:(NSApplication *)sender openFiles:(NSA*)filenames {
 	NSLog(@"openFiles: %@", filenames);
 	// call onOpenFiles callback, if present
 	if (jsapp.onOpenFiles)
 		[jsapp.onOpenFiles invokeWithArguments:filenames inContext:[[jsapp.webView mainFrame] globalContext]];
 }
-
-
 
 @end
