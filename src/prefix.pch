@@ -1,6 +1,7 @@
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
 	#import <WebKit/WebKit.h>
+	#import <AtoZ/AtoZ.h>
 	#define kCUAppWebScriptNamespace @"App"
 	#define kCUWindowWebScriptNamespace @"Win"
 #endif

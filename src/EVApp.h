@@ -1,5 +1,13 @@
+
 #import "EVWebView.h"
 #import "CUApp.h"
+
+
+#import "WebInspector.h"
+#import "WebInspectorWindowController.h"
+
+
+
 
 @class WebInspector, WebInspectorWindowController, EVApp;
 

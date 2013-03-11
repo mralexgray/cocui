@@ -1,9 +1,7 @@
+
 #import "EVApp.h"
 #import "WebScriptObject+EVJS.h"
 #import "jsbridge.h"
-
-#import "webkit-private/WebInspector.h"
-#import "webkit-private/WebInspectorWindowController.h"
 
 //#define WITH_FSCRIPT 1
 #if WITH_FSCRIPT
@@ -13,13 +11,17 @@
 EVApp *g_app = NULL;
 
 
-@implementation WebInspectorWindowController (OverrideCloseAction)
-// This is a fix for the broken WebInspector which window can not be closed once we have opened it
-- (BOOL)windowShouldClose:(id)window {
-	[window orderOut:self];
-	return NO;
-}
-@end
+//@interface  WebInspectorWindowController ()
+//- (BOOL)windowShouldClose:(id)window;
+//@end
+//
+//@implementation WebInspectorWindowController //OverrideCloseAction)
+//// This is a fix for the broken WebInspector which window can not be closed once we have opened it
+//- (BOOL)windowShouldClose:(id)window {
+//	[window orderOut:self];
+//	return NO;
+//}
+//@end
 
 
 @implementation EVApp

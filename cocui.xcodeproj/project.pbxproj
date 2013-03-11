@@ -48,8 +48,6 @@
 		3A5DB2411062A60300B5F45F /* WebFrame+CUJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DB2401062A60300B5F45F /* WebFrame+CUJS.m */; };
 		3A6A0B4C105D17590035640D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		3A6A0B6F105D183A0035640D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A0B6D105D183A0035640D /* MainMenu.xib */; };
-		3A7B4C13105EE0E30097B5D5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7B4C11105EE0E30097B5D5 /* Sparkle.framework */; };
-		3A7B4C2D105EE13D0097B5D5 /* Sparkle.framework in Copy frameworks */ = {isa = PBXBuildFile; fileRef = 3A7B4C11105EE0E30097B5D5 /* Sparkle.framework */; };
 		3A7B4C31105EE19E0097B5D5 /* main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1183D1105D25750058B542 /* main.xib */; };
 		3AEE4417105E943500E89C47 /* CUWin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE4416105E943500E89C47 /* CUWin.m */; };
 		3AEE44F0105EADA300E89C47 /* jsbridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE44EF105EADA300E89C47 /* jsbridge.m */; };
@@ -60,6 +58,7 @@
 		3AF3BB2E105C20F600B3CBCC /* WebScriptObject+EVJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3BB2D105C20F600B3CBCC /* WebScriptObject+EVJS.m */; };
 		3AF3BB55105C27F700B3CBCC /* NSUserDefaults+EVJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3BB54105C27F700B3CBCC /* NSUserDefaults+EVJS.m */; };
 		3AF3BB5A105C2AAB00B3CBCC /* NSUserDefaultsController+EVJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3BB59105C2AAB00B3CBCC /* NSUserDefaultsController+EVJS.m */; };
+		7BCF78C316ED6233005F4660 /* AtoZ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCF78C116ED5EB2005F4660 /* AtoZ.framework */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -80,20 +79,6 @@
 			remoteInfo = Template;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		3A7B4C30105EE1430097B5D5 /* Copy frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				3A7B4C2D105EE13D0097B5D5 /* Sparkle.framework in Copy frameworks */,
-			);
-			name = "Copy frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -159,6 +144,7 @@
 		3AF3BBF7105C3C0D00B3CBCC /* WebInspectorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebInspectorWindowController.h; sourceTree = "<group>"; };
 		3AF3BC1C105C421700B3CBCC /* FScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FScript.framework; path = /Library/Frameworks/FScript.framework; sourceTree = "<absolute>"; };
 		3AF3BC5C105C49CC00B3CBCC /* WebInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebInspector.h; sourceTree = "<group>"; };
+		7BCF78C116ED5EB2005F4660 /* AtoZ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AtoZ.framework; path = ../../../../../Library/Frameworks/AtoZ.framework; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Template.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Template.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -170,7 +156,6 @@
 			files = (
 				3A6A0B4C105D17590035640D /* Cocoa.framework in Frameworks */,
 				3A114F63105D610B00921886 /* Carbon.framework in Frameworks */,
-				3A7B4C13105EE0E30097B5D5 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BCF78C316ED6233005F4660 /* AtoZ.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				3A4BEF3C10510E0700534481 /* WebKit.framework in Frameworks */,
 				3AF3BB17105C0C6200B3CBCC /* JavaScriptCore.framework in Frameworks */,
@@ -191,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				32CA4F630368D1EE00C91783 /* prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
 				3A4BEF0B1051095800534481 /* EVApp.h */,
 				3A4BEF0C1051095800534481 /* EVApp.m */,
 				3A114FB6105D81BA00921886 /* CUApp.h */,
@@ -250,6 +235,7 @@
 		29B97314FDCFA39411CA2CEA /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF78C116ED5EB2005F4660 /* AtoZ.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -261,6 +247,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				29B97316FDCFA39411CA2CEA /* main.m */,
 				3AF3B961105BEA1100B3CBCC /* default.css */,
 				3A114F75105D760300921886 /* main.js */,
 				3A4BEF4C1051100100534481 /* index.html */,
@@ -342,7 +329,6 @@
 				3A6A0B36105D17590035640D /* Resources */,
 				3A6A0B3C105D17590035640D /* Sources */,
 				3A6A0B4B105D17590035640D /* Frameworks */,
-				3A7B4C30105EE1430097B5D5 /* Copy frameworks */,
 			);
 			buildRules = (
 			);
@@ -380,7 +366,11 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocui" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Events */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -529,11 +519,11 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SYSTEM_LIBRARY_DIR)/Frameworks/WebKit.framework/Versions/A/Frameworks\\\"",
-					"\"$(SRCROOT)/frameworks\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = required;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -554,9 +544,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SYSTEM_LIBRARY_DIR)/Frameworks/WebKit.framework/Versions/A/Frameworks\\\"",
-					"\"$(SRCROOT)/frameworks\"",
+					"\"$(SRCROOT)\"",
 				);
-				GCC_ENABLE_OBJC_GC = required;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = manager/prefix.pch;
@@ -575,17 +565,17 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/WebKit.framework/Versions/A/Frameworks\"",
-					"\"$(SRCROOT)/frameworks\"",
+					"\"$(SRCROOT)/src/webkit-private\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = required;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = src/prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=2";
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Template;
@@ -600,13 +590,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/WebKit.framework/Versions/A/Frameworks\"",
-					"\"$(SRCROOT)/frameworks\"",
+					"\"$(SRCROOT)/src/webkit-private\"",
 				);
-				GCC_ENABLE_OBJC_GC = required;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = src/prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Template;
@@ -616,26 +606,26 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = "";
 			};
 			name = Release;
 		};

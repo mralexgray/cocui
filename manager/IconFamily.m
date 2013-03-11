@@ -1502,7 +1502,7 @@ enum {
 // interoperable with the Cocoa Pasteboard).
 
 @implementation IconFamily (ScrapAdditions)
-
+/**
 + (BOOL) canInitWithScrap
 {
     ScrapRef scrap = NULL;
@@ -1570,7 +1570,7 @@ enum {
 //    HUnlock((Handle)hIconFamily); // Handle-based memory isn't compacted anymore, so calling HLock()/HUnlock() is unnecessary.
     return YES;
 }
-
+*/
 @end
 
 
