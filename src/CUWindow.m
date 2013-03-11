@@ -104,7 +104,7 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	webInspector = nil;
 	webInspectorWindowController = nil;
 	[self setContentView:webView];
-	[self setDelegate:self];
+	self.delegate = (id<NSWindowDelegate>)self;
 	return self;
 }
 
@@ -204,7 +204,7 @@ CUJS_FORWARD_NOTIFICATION_IM(windowWillMove, _DOMDOC)
 
 - (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)frame {
 	NSLog(@"ALERT [%@] %@", frame, message);
-	NSBeginInformationalAlertSheet(@"Notice", nil, nil, nil, [sender window], nil, NULL, NULL, NULL, message);
+	NSBeginInformationalAlertSheet(@"Notice", nil, nil, nil, [sender window], nil, NULL, NULL, NULL, message, nil);
 }
 
 

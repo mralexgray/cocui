@@ -11,6 +11,9 @@
 EVApp *g_app = NULL;
 
 
+#import "WebInspector.h"
+#import "WebInspectorWindowController.h"
+
 //@interface  WebInspectorWindowController ()
 //- (BOOL)windowShouldClose:(id)window;
 //@end
@@ -26,7 +29,8 @@ EVApp *g_app = NULL;
 
 @implementation EVApp
 
-@synthesize developmentMode;
+@synthesize developmentMode, jsapp, logPanel, logTextAttrs, logTextView;
+@synthesize webInspector, webInspectorWindowController;
 
 + (EVApp *)instance {
 	if (!g_app)
@@ -35,11 +39,12 @@ EVApp *g_app = NULL;
 }
 
 
-- (id)init {
+- (id)init
+{
 	NSLog(@"-[EVApp init]");
 	[super init];
 	g_app = self;
-	[self setDelegate:self];
+	[self setDelegate:(id<NSApplicationDelegate>)self];
 	
 	WebPreferences *preferences = [WebPreferences standardPreferences];
 	[preferences setUserStyleSheetLocation:[[NSURL alloc] 

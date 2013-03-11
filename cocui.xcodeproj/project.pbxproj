@@ -32,7 +32,6 @@
 		3A114F7B105D763500921886 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 3A114F75105D760300921886 /* main.js */; };
 		3A114FB5105D7CEA00921886 /* CUWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A114FB4105D7CEA00921886 /* CUWindow.m */; };
 		3A114FB8105D81BA00921886 /* CUApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A114FB7105D81BA00921886 /* CUApp.m */; };
-		3A115153105DB08200921886 /* NSString+CUAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A115152105DB08200921886 /* NSString+CUAdditions.m */; };
 		3A115248105DC6DC00921886 /* NSDictionary+CUAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A115247105DC6DC00921886 /* NSDictionary+CUAdditions.m */; };
 		3A1183D4105D25750058B542 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1183D0105D25750058B542 /* main.m */; };
 		3A1BFA771051654B00FE3E7D /* NSWindow+EVJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BFA761051654B00FE3E7D /* NSWindow+EVJS.m */; };
@@ -102,8 +101,6 @@
 		3A114FB4105D7CEA00921886 /* CUWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUWindow.m; path = src/CUWindow.m; sourceTree = "<group>"; };
 		3A114FB6105D81BA00921886 /* CUApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUApp.h; path = src/CUApp.h; sourceTree = "<group>"; };
 		3A114FB7105D81BA00921886 /* CUApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUApp.m; path = src/CUApp.m; sourceTree = "<group>"; };
-		3A115151105DB08200921886 /* NSString+CUAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+CUAdditions.h"; path = "src/NSString+CUAdditions.h"; sourceTree = "<group>"; };
-		3A115152105DB08200921886 /* NSString+CUAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+CUAdditions.m"; path = "src/NSString+CUAdditions.m"; sourceTree = "<group>"; };
 		3A115246105DC6DC00921886 /* NSDictionary+CUAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+CUAdditions.h"; path = "src/NSDictionary+CUAdditions.h"; sourceTree = "<group>"; };
 		3A115247105DC6DC00921886 /* NSDictionary+CUAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+CUAdditions.m"; path = "src/NSDictionary+CUAdditions.m"; sourceTree = "<group>"; };
 		3A1183CF105D25750058B542 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -187,8 +184,6 @@
 				3AEE4416105E943500E89C47 /* CUWin.m */,
 				3A4BEF8210513E6400534481 /* EVWebView.h */,
 				3A4BEF8310513E6400534481 /* EVWebView.m */,
-				3A115151105DB08200921886 /* NSString+CUAdditions.h */,
-				3A115152105DB08200921886 /* NSString+CUAdditions.m */,
 				3A115246105DC6DC00921886 /* NSDictionary+CUAdditions.h */,
 				3A115247105DC6DC00921886 /* NSDictionary+CUAdditions.m */,
 				3AF3BB2C105C20F600B3CBCC /* WebScriptObject+EVJS.h */,
@@ -455,7 +450,6 @@
 				3AF3BB5A105C2AAB00B3CBCC /* NSUserDefaultsController+EVJS.m in Sources */,
 				3A114FB5105D7CEA00921886 /* CUWindow.m in Sources */,
 				3A114FB8105D81BA00921886 /* CUApp.m in Sources */,
-				3A115153105DB08200921886 /* NSString+CUAdditions.m in Sources */,
 				3A115248105DC6DC00921886 /* NSDictionary+CUAdditions.m in Sources */,
 				3AEE4417105E943500E89C47 /* CUWin.m in Sources */,
 				3AEE44F0105EADA300E89C47 /* jsbridge.m in Sources */,
@@ -578,8 +572,8 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Template;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -600,8 +594,8 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Template;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -610,10 +604,9 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
-				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -625,9 +618,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PREBINDING = NO;
 				SDKROOT = "";
 			};

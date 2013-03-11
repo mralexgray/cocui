@@ -3,42 +3,35 @@
 #import "CUApp.h"
 
 
-#import "WebInspector.h"
-#import "WebInspectorWindowController.h"
-
-
-
 
 @class WebInspector, WebInspectorWindowController, EVApp;
 
 extern EVApp *g_app; // global instance of application
 
-@interface EVApp : NSApplication {
-	CUApp *jsapp; // "App" namespace exposed in Javascript
-	BOOL developmentMode;
+@interface EVApp : NSApplication
+
+@property (NATOM, STRNG)  CUApp *jsapp; 	// "App" namespace exposed in Javascript
+@property (RONLY)	       BOOL  developmentMode;
 	
-	IBOutlet NSWindow *logPanel;
-	IBOutlet NSTextView *logTextView;
-	NSDictionary *logTextAttrs;
+@property (ASS)	IBOutlet    NSW *logPanel;
+@property (ASS)	IBOutlet NSTXTV *logTextView;
+@property (NATOM, STRNG)    NSD *logTextAttrs;
 	
-	WebInspector *webInspector;
-	WebInspectorWindowController *webInspectorWindowController;
-}
+@property (RONLY) WebInspector 					*webInspector;
+@property (STRNG) WebInspectorWindowController 	*webInspectorWindowController;
 
-@property(readonly) BOOL developmentMode;
 
-+ (EVApp *)instance;
++ (EVApp*) instance;
+- (void)   loadMainScript;
 
--(void)loadMainScript;
+-(IBAction) showInspector:(id)sender; // for frontmost win or main if no wins
+-(IBAction) showConsole:(id)sender; // for frontmost win or main if no wins
+-(IBAction) showMainConsole:(id)sender;
+-(IBAction) reloadApp:(id)sender;
 
--(IBAction)showInspector:(id)sender; // for frontmost win or main if no wins
--(IBAction)showConsole:(id)sender; // for frontmost win or main if no wins
--(IBAction)showMainConsole:(id)sender;
--(IBAction)reloadApp:(id)sender;
+//-(WebInspector*) webInspector;
 
--(WebInspector *)webInspector;
-
--(void)dlog:(NSString *)format, ...;
--(void)dlog:(NSString *)format args:(va_list)args;
+-(void)	dlog:(NSS*)format, ...;
+-(void) dlog:(NSS*)format args:(va_list)args;
 
 @end

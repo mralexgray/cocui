@@ -1,5 +1,5 @@
+
 #import "WebScriptObject+EVJS.h"
-#import "NSString+CUAdditions.h"
 
 @implementation WebScriptObject (EVJS)
 
