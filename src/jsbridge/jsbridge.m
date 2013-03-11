@@ -21,7 +21,7 @@ id cu_js_forward_invocation(id target, NSString *name, NSArray *args, BOOL stric
 		NSUInteger i, count = [args count];
 		// Indices 0 and 1 indicate the hidden arguments self and _cmd, respectively, thus "+2"
 		for (i = 0; i < count; i++) {
-			id arg = [args objectAtIndex:i];
+			id arg = args[i];
 			[inv setArgument:(void *)&arg atIndex:i+2];
 		}
 		[inv setSelector:sel];

@@ -16,7 +16,7 @@
 	arguments = calloc(count, sizeof(JSValueRef));
 	
 	for (i = 0; i < count; i++) {
-		id arg = [args objectAtIndex:i];
+		id arg = args[i];
 		if ([arg isMemberOfClass:[NSNumber class]]) {
 			arguments[i] = JSValueMakeNumber(jctx, [arg doubleValue]);
 		}
@@ -179,7 +179,7 @@
 						// todo error handling
 						return nil;
 					}
-					[v setObject:[self cocoaRepresentationOfJSValue:vval inContext:ctx] forKey:CU_JSStringToNSString(k)];
+					v[CU_JSStringToNSString(k)] = [self cocoaRepresentationOfJSValue:vval inContext:ctx];
 				}
 			}
 			return v;
@@ -192,10 +192,10 @@
 			return nil;
 		
 		case kJSTypeBoolean:
-			return [NSNumber numberWithBool:JSValueToBoolean(ctx, (JSValueRef)o)];
+			return @(JSValueToBoolean(ctx, (JSValueRef)o));
 			
 		case kJSTypeNumber:
-			return [NSNumber numberWithDouble:JSValueToNumber(ctx, (JSValueRef)o, NULL)];
+			return @(JSValueToNumber(ctx, (JSValueRef)o, NULL));
 		
 		case kJSTypeString: {
 			JSStringRef jstr;

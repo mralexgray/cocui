@@ -99,7 +99,7 @@ CUJS_FORWARD_INVOCATION_TO(win)
 
 
 -(NSString *)level {
-	return [NSString stringWithUTF8String:[CUWindow windowLevelNameForLevel:[win level]]];
+	return @([CUWindow windowLevelNameForLevel:[win level]]);
 }
 
 

@@ -221,7 +221,7 @@ CUJS_FORWARD_NOTIFICATION_IM(windowWillMove, _DOMDOC)
 // Unofficial:
 
 - (void)webView:(WebView *)sender addMessageToConsole:(NSDictionary *)m {
-	[g_app dlog:@"[%@:%@] %@", [m objectForKey:@"sourceURL"], [m objectForKey:@"lineNumber"], [m objectForKey:@"message"]];
+	[g_app dlog:@"[%@:%@] %@", m[@"sourceURL"], m[@"lineNumber"], m[@"message"]];
 }
 
 

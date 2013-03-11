@@ -21,7 +21,7 @@ CUJS_TRANSPOND_NAMES_PLAIN;
 
 - (NSArray *)position {
 	NSRect r = [self frame];
-	return [NSArray arrayWithObjects:[NSNumber numberWithFloat:r.origin.x], [NSNumber numberWithFloat:r.origin.y], nil];
+	return @[[NSNumber numberWithFloat:r.origin.x], [NSNumber numberWithFloat:r.origin.y]];
 }
 
 - (id)invokeDefaultMethodWithArguments:(NSArray *)args {

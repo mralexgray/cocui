@@ -132,8 +132,8 @@ CUJS_TRANSPOND_NAMES_PLAIN
 		
 		//#define BOPT(key, assignto) do { if((n = [args objectForKey:key])) defer = [n boolValue]; } while(0)
 		
-		uri = [args objectForKey:@"uri"];
-		name = [args objectForKey:@"name"];
+		uri = args[@"uri"];
+		name = args[@"name"];
 		
 		/*if (!uri) {
 			[jsargs setException:@"missing \"uri\" argument"];
@@ -141,12 +141,12 @@ CUJS_TRANSPOND_NAMES_PLAIN
 		}*/
 		
 		// update rect
-		d = [args objectForKey:@"rect"];
+		d = args[@"rect"];
 		if (d && [d respondsToSelector:@selector(objectForKey:)])
 			contentRect = [d updateRect:contentRect];
 		
 		// fullscreen
-		_fullscreen = ((n = [args objectForKey:@"fullscreen"]) && [n boolValue]);
+		_fullscreen = ((n = args[@"fullscreen"]) && [n boolValue]);
 		if (_fullscreen)
 			shadow = NO; // shadow defaults to NO
 		
@@ -158,7 +158,7 @@ CUJS_TRANSPOND_NAMES_PLAIN
 		 resizable: bool (true)
 		 textured: bool (false)
 		 */
-		d = [args objectForKey:@"style"];
+		d = args[@"style"];
 		if (d && [d respondsToSelector:@selector(objectForKey:)]) {
 			#define OPT_DEFAULT_TRUE(dict, key, flag) \
 				( (!(n = [dict objectForKey:key]) || [n boolValue]) ? flag : 0 )
@@ -176,7 +176,7 @@ CUJS_TRANSPOND_NAMES_PLAIN
 			
 			styleMask = 0;
 			
-			if (!(n = [d objectForKey:@"borderless"]) || ![n boolValue]) {
+			if (!(n = d[@"borderless"]) || ![n boolValue]) {
 				// only eval these if not borderless
 				styleMask |= OPT_DEFAULT_TRUE(d, @"titled", NSTitledWindowMask);
 				styleMask |= OPT_DEFAULT_TRUE(d, @"closable", NSClosableWindowMask);
@@ -185,7 +185,7 @@ CUJS_TRANSPOND_NAMES_PLAIN
 			}
 			styleMask |= OPT_DEFAULT_FALSE(d, @"textured", NSTexturedBackgroundWindowMask);
 			
-			if ((n = [d objectForKey:@"shadow"]))
+			if ((n = d[@"shadow"]))
 				shadow = [n boolValue];
 			
 			#undef OPT_DEFAULT_TRUE
@@ -197,11 +197,11 @@ CUJS_TRANSPOND_NAMES_PLAIN
 		}
 		
 		// defer
-		if ((n = [args objectForKey:@"defer"]))
+		if ((n = args[@"defer"]))
 			defer = [n boolValue];
 		
 		// level
-		if ((s = [args objectForKey:@"level"])) {
+		if ((s = args[@"level"])) {
 			CGWindowLevelKey d = [CUWindow windowLevelKeyFromNameOrNumber:s];
 			if (windowLevel != -1)
 				windowLevel = CGWindowLevelForKey(d);
@@ -334,7 +334,7 @@ CUJS_TRANSPOND_NAMES_PLAIN
 // Unofficial:
 
 - (void)webView:(WebView *)sender addMessageToConsole:(NSDictionary *)m {
-	[g_app dlog:@"[%@:%@] %@", [m objectForKey:@"sourceURL"], [m objectForKey:@"lineNumber"], [m objectForKey:@"message"]];
+	[g_app dlog:@"[%@:%@] %@", m[@"sourceURL"], m[@"lineNumber"], m[@"message"]];
 }
 
 
