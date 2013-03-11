@@ -43,7 +43,6 @@
 		3A4BEF0D1051095800534481 /* EVApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4BEF0C1051095800534481 /* EVApp.m */; };
 		3A4BEF3C10510E0700534481 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4BEF3B10510E0700534481 /* WebKit.framework */; };
 		3A4BEF4D1051100100534481 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A4BEF4C1051100100534481 /* index.html */; };
-		3A4BEF8410513E6400534481 /* EVWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4BEF8310513E6400534481 /* EVWebView.m */; };
 		3A5DB2411062A60300B5F45F /* WebFrame+CUJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DB2401062A60300B5F45F /* WebFrame+CUJS.m */; };
 		3A6A0B4C105D17590035640D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		3A6A0B6F105D183A0035640D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A0B6D105D183A0035640D /* MainMenu.xib */; };
@@ -121,8 +120,6 @@
 		3A4BEF0C1051095800534481 /* EVApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EVApp.m; path = src/EVApp.m; sourceTree = "<group>"; };
 		3A4BEF3B10510E0700534481 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		3A4BEF4C1051100100534481 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = resources/index.html; sourceTree = "<group>"; };
-		3A4BEF8210513E6400534481 /* EVWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVWebView.h; path = src/EVWebView.h; sourceTree = "<group>"; };
-		3A4BEF8310513E6400534481 /* EVWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EVWebView.m; path = src/EVWebView.m; sourceTree = "<group>"; };
 		3A5DB2401062A60300B5F45F /* WebFrame+CUJS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WebFrame+CUJS.m"; path = "src/jsbridge/WebFrame+CUJS.m"; sourceTree = "<group>"; };
 		3A6A0B52105D17590035640D /* Cocui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cocui.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A6A0B6E105D183A0035640D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -182,8 +179,6 @@
 				3A114FB4105D7CEA00921886 /* CUWindow.m */,
 				3AEE4415105E943500E89C47 /* CUWin.h */,
 				3AEE4416105E943500E89C47 /* CUWin.m */,
-				3A4BEF8210513E6400534481 /* EVWebView.h */,
-				3A4BEF8310513E6400534481 /* EVWebView.m */,
 				3A115246105DC6DC00921886 /* NSDictionary+CUAdditions.h */,
 				3A115247105DC6DC00921886 /* NSDictionary+CUAdditions.m */,
 				3AF3BB2C105C20F600B3CBCC /* WebScriptObject+EVJS.h */,
@@ -437,7 +432,6 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				3A4BEF0D1051095800534481 /* EVApp.m in Sources */,
-				3A4BEF8410513E6400534481 /* EVWebView.m in Sources */,
 				3A1BFA771051654B00FE3E7D /* NSWindow+EVJS.m in Sources */,
 				3A1BFB0810516BCD00FE3E7D /* NSDictionary+EVJS.m in Sources */,
 				3A1BFB231051BD0800FE3E7D /* EVRect.m in Sources */,

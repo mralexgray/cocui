@@ -5,7 +5,7 @@
 	defaults = [NSUserDefaults standardUserDefaults];
 	documentTypes = [NSMutableArray array];
 	
-	NSString *locPath = [defaults stringForKey:@"locationPath"];
+	NSS *locPath = [defaults stringForKey:@"locationPath"];
 	if (!locPath)
 		locPath = [NSHomeDirectory() stringByAppendingString:@"/Documents"];
 	[locationPath setURL:[[NSURL alloc] initFileURLWithPath:locPath isDirectory:YES]];
@@ -28,7 +28,7 @@
 	NSError *e = nil;
 	NSData *d;
 	BOOL isDir = YES;
-	NSString *sname, *suti;
+	NSS *sname, *suti;
 	
 	sname = [[name stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	suti = [[uti stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -59,7 +59,7 @@
 		return; // abort
 	}
 	
-	NSString *basedir = [[[locationPath URL] path] stringByStandardizingPath];
+	NSS *basedir = [[[locationPath URL] path] stringByStandardizingPath];
 	basedir = [basedir stringByAppendingPathComponent:[[sname lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@"-"]];
 	
 	if ([fm fileExistsAtPath:basedir]) {
@@ -76,7 +76,7 @@
 	}
 	NSLog(@"created directory %@", basedir);
 	
-	NSString *tplAppdir = [[NSBundle mainBundle] resourcePath];
+	NSS *tplAppdir = [[NSBundle mainBundle] resourcePath];
 	tplAppdir = [tplAppdir stringByAppendingPathComponent:@"Template.app"];
 	
 	if (![fm fileExistsAtPath:tplAppdir isDirectory:&isDir] || !isDir) {
@@ -84,9 +84,9 @@
 		return; // abort
 	}
 	
-	NSString *appdir = [basedir stringByAppendingPathComponent:sname];
+	NSS *appdir = [basedir stringByAppendingPathComponent:sname];
 	appdir = [appdir stringByAppendingPathExtension:@"app"];
-	NSString *respath = [appdir stringByAppendingPathComponent:@"Contents/Resources"];
+	NSS *respath = [appdir stringByAppendingPathComponent:@"Contents/Resources"];
 	
 	e = nil;
 	if (![fm copyItemAtPath:tplAppdir toPath:appdir error:&e]) {
@@ -97,7 +97,7 @@
 	NSLog(@"copied template app from %@ to %@", tplAppdir, appdir);
 	
 	// update Info.plist
-	NSString *infoPlistPath = [appdir stringByAppendingPathComponent:@"Contents/Info.plist"];
+	NSS *infoPlistPath = [appdir stringByAppendingPathComponent:@"Contents/Info.plist"];
 	NSMutableDictionary *infoPlist = [NSMutableDictionary dictionaryWithContentsOfFile:infoPlistPath];
 	
 	[infoPlist setObject:suti forKey:@"CFBundleIdentifier"];
@@ -109,7 +109,7 @@
 	// icon
 	[infoPlist removeObjectForKey:@"CFBundleIconFile"];
 	if (icon.imageURL) {
-		NSString *icopath = [respath stringByAppendingPathComponent:[[icon.imageURL path] lastPathComponent]];
+		NSS *icopath = [respath stringByAppendingPathComponent:[[icon.imageURL path] lastPathComponent]];
 		icopath = [[icopath stringByDeletingPathExtension] stringByAppendingPathExtension:@"icns"];
 		NSImage *ico = [[NSImage alloc] initWithContentsOfURL:icon.imageURL];
 		IconFamily* iconFamily = [IconFamily iconFamilyWithThumbnailsOfImage:ico usingImageInterpolation:NSImageInterpolationHigh];
@@ -122,8 +122,8 @@
 	[infoPlist removeObjectForKey:@"CFBundleDocumentTypes"];
 	
 	if ([documentTypes count]) {
-		NSString *s;
-		NSArray *a;
+		NSS *s;
+		NSA *a;
 		NSMutableArray *types = [NSMutableArray arrayWithCapacity:[documentTypes count]];
 		
 		for (NSMutableDictionary *item in documentTypes) {
@@ -167,7 +167,7 @@
 	}
 	
 	// write Info.plist
-	NSString *errstr;
+	NSS *errstr;
 	d = [NSPropertyListSerialization dataFromPropertyList:infoPlist format:NSPropertyListXMLFormat_v1_0 errorDescription:&errstr];
 	if (!d) {
 		NSLog(@"failed to update %@: %@", infoPlistPath, errstr);
@@ -182,8 +182,8 @@
 	[defaults setPersistentDomain:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"DevelopmentMode"] forName:suti];
 	
 	// make symlink to resources
-	NSString *ln = [basedir stringByAppendingPathComponent:@"Resources"];
-	NSString *t = respath;
+	NSS *ln = [basedir stringByAppendingPathComponent:@"Resources"];
+	NSS *t = respath;
 	if (![fm createSymbolicLinkAtPath:ln withDestinationPath:t error:&e]) {
 		NSLog(@"failed to create symbolic link at %@ pointing to %@", ln, t);
 		[[NSAlert alertWithError:e] runModal];
@@ -202,7 +202,7 @@
 	[[NSWorkspace sharedWorkspace] openFile:appdir];
 	
 	// edit index.html
-	NSString *indexhtml = [respath stringByAppendingPathComponent:@"index.html"];
+	NSS *indexhtml = [respath stringByAppendingPathComponent:@"index.html"];
 	if ([[NSWorkspace sharedWorkspace] openFile:respath withApplication:@"TextMate" andDeactivate:YES]) {
 		[[NSWorkspace sharedWorkspace] openFile:indexhtml withApplication:@"TextMate"];
 	}

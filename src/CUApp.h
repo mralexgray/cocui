@@ -1,6 +1,6 @@
 @class CUWin;
 @interface CUApp : NSObject {
-	NSString *version;
+	NSS *version;
 	NSUserDefaultsController *defaultsController;
 	NSUserDefaults *defaults;
 	CGDirectDisplayID fullscreen; // -1 when not in fullscreen mode
@@ -14,7 +14,7 @@
 @protected
 	WebPreferences *_webPrefs;
 }
-@property(assign) NSString *version;
+@property(assign) NSS *version;
 @property(assign) NSUserDefaultsController *defaultsController;
 @property(assign) NSUserDefaults *defaults;
 @property(assign) BOOL fullscreen;
@@ -22,7 +22,7 @@
 @property(assign) WebScriptObject *onOpenFiles;
 @property(readonly) WebView *webView;
 -(id)initWithWebPreferences:(WebPreferences *)preferences;
--(id)evaluateWebScript:(NSString *)js errorDesc:(NSString **)errdesc;
+-(id)evaluateWebScript:(NSS*)js errorDesc:(NSS **)errdesc;
 -(void)terminate;
 -(CUWin *)createWindow:(WebScriptObject *)jsargs;
 

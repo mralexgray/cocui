@@ -8,7 +8,7 @@ CUJS_TRANSPOND_NAMES_PLAIN;
 	size = [[EVSize alloc] initWithNSSize:r.size];
 	return self;
 }
--(NSString *)description {
-	return [NSString stringWithFormat:@"{origin:%@, size:%@}", origin, size];
+-(NSS*)description {
+	return [NSS stringWithFormat:@"{origin:%@, size:%@}", origin, size];
 }
 @end

@@ -19,7 +19,7 @@
 		else {
 			if (![arg isMemberOfClass:NSS.class])
 				arg = [arg description];
-			arguments[i] = JSValueMakeString(jctx, JSStringCreateWithCFString((CFStringRef)arg));
+			arguments[i] = JSValueMakeString(jctx, JSStringCreateWithCFString((__bridge CFStringRef)arg));
 		}
 	}
 	
@@ -38,11 +38,11 @@
 - (id)cocoaRepresentationInContext:(JSContextRef)ctx {
 	return [isa cocoaRepresentationOfJSValue:[self JSObject] inContext:ctx];
 }
-- (NSString *)JSONRepresentationInContext:(JSContextRef)ctx {
+- (NSS*)JSONRepresentationInContext:(JSContextRef)ctx {
 	return [isa JSONRepresentationOfJSValue:[self JSObject] inContext:ctx];
 }
 
-+ (NSString *)JSONRepresentationOfJSValue:(JSValueRef)o inContext:(JSContextRef)ctx {
++ (NSS*)JSONRepresentationOfJSValue:(JSValueRef)o inContext:(JSContextRef)ctx {
 	JSType t = JSValueGetType(ctx, (JSValueRef)o);
 	
 	switch (t) {
@@ -56,7 +56,7 @@
 			if (!count)
 				return @"{}";
 			JSValueRef vval;
-			NSString *fmt = @"[%@]";
+			NSS *fmt = @"[%@]";
 			
 			// note: the array detection will fail if there is an actual undefined value
 			//       in the collection. In those cases a dictionary will be created.
@@ -86,17 +86,14 @@
 					JSStringRef k = JSPropertyNameArrayGetNameAtIndex(keys, i);
 					JSValueRef vval = JSObjectGetProperty(ctx, obj, k, NULL);
 					// JSValueRef vval = JSObjectGetPropertyAtIndex(ctx, obj, (unsigned int)i, NULL);
-					if (!vval) {
-						// todo error handling
-						return nil;
-					}
-					[v addObject:[NSString stringWithFormat:@"%@:%@", [CU_JSStringToNSString(k) JSONRepresentation], [self JSONRepresentationOfJSValue:vval inContext:ctx]]];
+					if (!vval)	return nil;							// todo error handling
+					[v addObject:$(@"%@:%@", [CU_JSStringToNSString(k) JSONRepresentation],
+											 [self JSONRepresentationOfJSValue:&vval inContext:ctx])];
 				}
 				fmt = @"{%@}";
 			}
-			
-			v = [NSString stringWithFormat:fmt, [v componentsJoinedByString:@","]];
-			return v;
+			return v = $(fmt, [v componentsJoinedByString:@","]);
+
 		}
 			
 		case kJSTypeUndefined:
@@ -109,12 +106,12 @@
 			return JSValueToBoolean(ctx, (JSValueRef)o) ? @"true" : @"false";
 			
 		case kJSTypeNumber:
-			return [NSString stringWithFormat:@"%f", JSValueToNumber(ctx, (JSValueRef)o, NULL)];
+			return [NSS stringWithFormat:@"%f", JSValueToNumber(ctx, (JSValueRef)o, NULL)];
 			
 		case kJSTypeString: {
 			JSStringRef jstr;
 			if ((jstr = JSValueToStringCopy(ctx, (JSValueRef)o, NULL)))
-				return [CU_JSStringToNSString(jstr) JSONRepresentation];
+				return [CU_JSStringToNSString(&jstr) JSONRepresentation];
 			return @"";
 		}
 	}
@@ -169,7 +166,7 @@
 						// todo error handling
 						return nil;
 					}
-					v[CU_JSStringToNSString(k)] = [self cocoaRepresentationOfJSValue:vval inContext:ctx];
+					v[CU_JSStringToNSString(k)] = [self cocoaRepresentationOfJSValue:&vval inContext:ctx];
 				}
 			}
 			return v;

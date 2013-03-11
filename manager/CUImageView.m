@@ -18,9 +18,9 @@
 	BOOL dragSucceeded = [super performDragOperation:sender];
 	if (dragSucceeded) {
 		imageURL = nil;
-		NSString *pb = [[sender draggingPasteboard] stringForType:NSURLPboardType];
+		NSS *pb = [[sender draggingPasteboard] stringForType:NSURLPboardType];
 		if (pb) {
-			NSArray *urls = [NSPropertyListSerialization propertyListFromData:[pb dataUsingEncoding:NSUTF8StringEncoding] mutabilityOption:NSPropertyListImmutable format:nil errorDescription:nil];
+			NSA *urls = [NSPropertyListSerialization propertyListFromData:[pb dataUsingEncoding:NSUTF8StringEncoding] mutabilityOption:NSPropertyListImmutable format:nil errorDescription:nil];
 			if ([urls count])
 				imageURL = [NSURL URLWithString:[urls objectAtIndex:0]];
 		}

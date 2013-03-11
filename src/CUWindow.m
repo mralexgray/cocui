@@ -145,7 +145,7 @@ CUJS_FORWARD_NOTIFICATION_IM(windowWillMove, _DOMDOC)
 	}
 }
 
-- (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame {
+- (void)webView:(WebView *)sender didReceiveTitle:(NSS*)title forFrame:(WebFrame *)frame {
 	if (frame == [webView mainFrame])
 		[self setTitle:title];
 }
@@ -179,7 +179,7 @@ CUJS_FORWARD_NOTIFICATION_IM(windowWillMove, _DOMDOC)
 	NSLog(@"dropping %@", pasteboard);
 }
 
-- (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)frame {
+- (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSS*)message initiatedByFrame:(WebFrame *)frame {
 	NSLog(@"ALERT [%@] %@", frame, message);
 	NSBeginInformationalAlertSheet(@"Notice", nil, nil, nil, [sender window], nil, NULL, NULL, NULL, message, nil);
 }

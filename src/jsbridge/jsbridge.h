@@ -3,8 +3,8 @@
 	+ (BOOL)isKeyExcludedFromWebScript:(const char *)name { return NO; }\
 	+ (BOOL)isSelectorExcludedFromWebScript:(SEL)sel { return NO; }
 #define CUJS_TRANSPOND_NAMES_PLAIN\
-	+ (NSString *)webScriptNameForSelector:(SEL)sel {\
-		NSString *s = NSStringFromSelector(sel);\
+	+ (NSS*)webScriptNameForSelector:(SEL)sel {\
+		NSS *s = NSStringFromSelector(sel);\
 		s = [s stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];\
 		s = [s stringByReplacingOccurrencesOfString:@"_" withString:@"$"];\
 		s = [s stringByReplacingOccurrencesOfString:@":" withString:@"_"];\
@@ -15,11 +15,11 @@
 	CUJS_EXPOSE_THIS_CLASS\
 	@end
 #define CUJS_FORWARD_INVOCATION_TO(_membername_)\
-	- (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSA*)args {\
+	- (id)invokeUndefinedMethodFromWebScript:(NSS*)name withArguments:(NSA*)args {\
 		return cu_js_forward_invocation(_membername_, name, args, NO);\
 	}
 #define CUJS_FORWARD_INVOCATION_STRICTLY_TO(_membername_)\
-	- (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSA*)args {\
+	- (id)invokeUndefinedMethodFromWebScript:(NSS*)name withArguments:(NSA*)args {\
 		return cu_js_forward_invocation(_membername_, name, args, YES);\
 	}
 // forward objc notification/delegate call as Event on document in script env
@@ -36,9 +36,9 @@
 		CUJS_DISPATCH_EVENT(_name_, _domdoc_);\
 	}
 #define CUJS_THROW(NSString_format, ... )\
-	[WebScriptObject throwException:[NSString stringWithFormat:NSString_format, ##__VA_ARGS__]]
+	[WebScriptObject throwException:[NSS stringWithFormat:NSString_format, ##__VA_ARGS__]]
 
-id cu_js_forward_invocation(id target, NSString *name, NSArray *args, BOOL strict);
+id cu_js_forward_invocation(id target, NSS *name, NSA *args, BOOL strict);
 #import "EVPoint.h"
 #import "EVSize.h"
 #import "EVRect.h"

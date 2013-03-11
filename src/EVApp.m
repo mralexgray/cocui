@@ -10,6 +10,10 @@ EVApp *g_app = NULL;
 
 #import "WebInspector.h"
 #import "WebInspectorWindowController.h"
+
+@implementation EVWebView
+@end
+
 //@interface  WebInspectorWindowController ()
 //- (BOOL)windowShouldClose:(id)window;
 //@end
@@ -38,16 +42,16 @@ EVApp *g_app = NULL;
 	g_app = self;
 	[self setDelegate:(id<NSApplicationDelegate>)self];
 	
-	WebPreferences *preferences = [WebPreferences standardPreferences];
-	[preferences setUserStyleSheetLocation:[[NSURL alloc] 
-											initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"default" ofType:@"css"]
-											isDirectory:false]];
+	WebPreferences *preferences = AZWEBPREFS;
+	preferences.userStyleSheetLocation =
+		[NSURL.alloc initFileURLWithPath:[AZAPPBUNDLE pathForResource:@"default" ofType:@"css"] isDirectory:false];
+
 	[preferences setUserStyleSheetEnabled:YES];
 	
-	jsapp = [[CUApp alloc] initWithWebPreferences:preferences];
-	jsapp.version = @"0.0.1"; // todo read from Info.plist
-	jsapp.defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-	jsapp.defaults = [jsapp.defaultsController defaults];
+	jsapp 					 = [CUApp.alloc initWithWebPreferences:preferences];
+	jsapp.version 			 = @"0.0.1"; // todo read from Info.plist
+	jsapp.defaultsController = AZUSERDEFSCTR;
+	jsapp.defaults 			 = [jsapp.defaultsController defaults];
 	
 	// development mode
 	developmentMode = [jsapp.defaults boolForKey:@"DevelopmentMode"];
@@ -81,18 +85,18 @@ EVApp *g_app = NULL;
 	}
 }
 
-- (void)dlog:(NSString *)format, ... {
+- (void)dlog:(NSS*)format, ... {
 	va_list args;
 	va_start(args, format);
 	[self dlog:format args:args];
 	va_end(args);
 }
 
-- (void)dlog:(NSString *)format args:(va_list)args {
+- (void)dlog:(NSS*)format args:(va_list)args {
 	if (developmentMode) {
-		format = [[NSString alloc] initWithFormat:format arguments:args];
+		format = [[NSS alloc] initWithFormat:format arguments:args];
 		[logTextView insertText:[[NSAttributedString alloc] 
-								 initWithString:[NSString stringWithFormat:@"%@ %@\n", [NSDate date], format]
+								 initWithString:[NSS stringWithFormat:@"%@ %@\n", [NSDate date], format]
 								 attributes:logTextAttrs]];
 	}
 	NSLogv(format, args);
@@ -107,12 +111,12 @@ EVApp *g_app = NULL;
 }
 
 -(void)loadMainScript {
-	NSString *mainsrc, *errDesc, *mainpath = [[NSBundle mainBundle] pathForResource:@"main" ofType:@"js"];
+	NSS *mainsrc, *errDesc, *mainpath = [[NSBundle mainBundle] pathForResource:@"main" ofType:@"js"];
 	NSStringEncoding charenc;
 	NSError *err = nil;
 	
 	while (1) {
-		mainsrc = [NSString stringWithContentsOfFile:mainpath usedEncoding:&charenc error:&err];
+		mainsrc = [NSS stringWithContentsOfFile:mainpath usedEncoding:&charenc error:&err];
 		if (!mainsrc || err) {
 			[[NSAlert alertWithError:err] runModal];
 			[NSApp terminate:self];
@@ -133,11 +137,12 @@ EVApp *g_app = NULL;
 	}
 }
 
--(WebInspector *)webInspector {
+- (WebInspector *)webInspector
+{
 	if (!webInspector)
-		webInspector = [[NSClassFromString(@"WebInspector") alloc] initWithWebView:jsapp.webView];
+		webInspector = [NSClassFromString(@"WebInspector").alloc initWithWebView:jsapp.webView];
 	if (!webInspectorWindowController)
-		webInspectorWindowController = [[NSClassFromString(@"WebInspectorWindowController") alloc] initWithInspectedWebView:jsapp.webView];
+		webInspectorWindowController = [NSClassFromString(@"WebInspectorWindowController").alloc initWithInspectedWebView:jsapp.webView];
 	return webInspector;
 }
 

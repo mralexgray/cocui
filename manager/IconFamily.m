@@ -609,7 +609,7 @@ enum {
     struct FileInfo *finderInfo = (struct FileInfo *)&catInfo.finderInfo;
     Handle hExistingCustomIcon;
     Handle hIconFamilyCopy;
-	NSString *parentDirectory;
+	NSS *parentDirectory;
 	
     // Before we do anything, get the original modification time for the target file.
     NSDate* modificationDate = [[[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:NO] objectForKey:NSFileModificationDate];
@@ -625,7 +625,7 @@ enum {
 	
 	// Get the name of the file, for FSCreateResFile.
 	struct HFSUniStr255 filename;
-	NSString *filenameString = [path lastPathComponent];
+	NSS *filenameString = [path lastPathComponent];
 	filename.length = [filenameString length];
 	[filenameString getCharacters:filename.unicode];
     // Make sure the file has a resource fork that we can open.  (Although
@@ -795,7 +795,7 @@ enum {
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
     BOOL exists;
-    NSString *iconrPath;
+    NSS *iconrPath;
     FSRef targetFolderFSRef, iconrFSRef;
     SInt16 file;
     OSErr result;

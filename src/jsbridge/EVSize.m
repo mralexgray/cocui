@@ -8,7 +8,7 @@ CUJS_TRANSPOND_NAMES_PLAIN;
 	height = [NSNumber numberWithFloat:st.height];
 	return self;
 }
--(NSString *)description {
-	return [NSString stringWithFormat:@"{width:%@, height:%@}", width, height];
+-(NSS*)description {
+	return [NSS stringWithFormat:@"{width:%@, height:%@}", width, height];
 }
 @end

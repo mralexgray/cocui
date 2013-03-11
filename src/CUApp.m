@@ -5,6 +5,9 @@
 #import "EVApp.h"
 #import "CUApp.h"
 #import "CUWindow.h"
+#import "CUWin.h"
+
+
 @implementation CUApp
 @synthesize version, defaults, defaultsController, webView;
 // callbacks
@@ -32,15 +35,15 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	return self;
 }
 
--(id)evaluateWebScript:(NSString *)js errorDesc:(NSString **)errdesc {
+-(id)evaluateWebScript:(NSS*)js errorDesc:(NSS **)errdesc {
 	JSContextRef ctx = [[webView mainFrame] globalContext];
-	JSStringRef script = JSStringCreateWithCFString((CFStringRef)js);
+	JSStringRef script = JSStringCreateWithCFString((__bridge CFStringRef)js);
 	JSStringRef sourceURL = JSStringCreateWithUTF8CString("<string>");
 	JSValueRef exc = NULL;
 	JSValueRef val = JSEvaluateScript(ctx, script, [[webView windowScriptObject] JSObject], sourceURL, 1, &exc);
 	JSStringRelease(sourceURL);
 	if (!val) {
-		*errdesc = (NSString *)JSStringCopyCFString(kCFAllocatorDefault, JSValueToStringCopy(ctx, exc, NULL));
+		*errdesc = (NSS*)JSStringCopyCFString(kCFAllocatorDefault, JSValueToStringCopy(ctx, exc, NULL));
 		return nil;
 	}
 	return [WebScriptObject cocoaRepresentationOfJSValue:val inContext:ctx];
@@ -51,12 +54,12 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	[g_app terminate:self];
 }
 
--(NSString *)encodeJSON:(WebScriptObject *)obj {
+-(NSS*)encodeJSON:(WebScriptObject *)obj {
 	return [obj JSONRepresentationInContext:[[webView mainFrame] globalContext]];
 }
 
--(NSString *)decodeJSON:(WebScriptObject *)obj {
-	return [[webView windowScriptObject] evaluateWebScript:[NSString stringWithFormat:@"(%@)", obj]];
+-(NSS*)decodeJSON:(WebScriptObject *)obj {
+	return [[webView windowScriptObject] evaluateWebScript:[NSS stringWithFormat:@"(%@)", obj]];
 }
 
 /*
@@ -94,10 +97,10 @@ CUJS_TRANSPOND_NAMES_PLAIN
  */
 -(CUWin *)createWindow:(WebScriptObject *)jsargs {
 	NSURL *url = nil;
-	NSString *uri = nil, *name = nil;
+	NSS *uri = nil, *name = nil;
 	NSRect visibleFrame = [[NSScreen mainScreen] visibleFrame];
 	NSRect contentRect = NSMakeRect(-1.0, -1.0, 300.0, 400.0);
-	NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+	NSUI styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
 	BOOL defer = NO, shadow = YES, _fullscreen = NO;
 	JSContextRef ctx = [[webView mainFrame] globalContext];
 	CGWindowLevel windowLevel = kCGNormalWindowLevel;
@@ -108,12 +111,12 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	
 	if (!args || ![[args class] isSubclassOfClass:[NSDictionary class]]) {
 		// simple string input (or something else that's not a dict)
-		uri = (NSString *)jsargs;
+		uri = (NSS*)jsargs;
 	}
 	else {
 		// keyword arguments
 		NSNumber *n;
-		NSString *s;
+		NSS *s;
 		NSDictionary *d;
 		
 		//#define BOPT(key, assignto) do { if((n = [args objectForKey:key])) defer = [n boolValue]; } while(0)
@@ -295,7 +298,7 @@ CUJS_TRANSPOND_NAMES_PLAIN
 	NSLog(@"dropping %@", pasteboard);
 }
 
-- (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)frame {
+- (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSS*)message initiatedByFrame:(WebFrame *)frame {
 	//NSLog(@"ALERT [%@] %@", frame, message);
 	//NSBeginInformationalAlertSheet(@"Notice", nil, nil, nil, [sender window], nil, NULL, NULL, NULL, message);
 	[NSAlert alertWithMessageText:@"Alert" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:message, nil];

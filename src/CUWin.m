@@ -18,7 +18,7 @@ CUJS_FORWARD_INVOCATION_TO(win)
 	return self;
 }
 
--(NSString *)valueOf {
+-(NSS*)valueOf {
 	return [self description];
 }
 
@@ -44,7 +44,7 @@ CUJS_FORWARD_INVOCATION_TO(win)
 
 /*- (NSA*)position {
 	NSRect r = [self frame];
-	return [NSArray arrayWithObjects:[NSNumber numberWithFloat:r.origin.x], [NSNumber numberWithFloat:r.origin.y], nil];
+	return [NSA arrayWithObjects:[NSNumber numberWithFloat:r.origin.x], [NSNumber numberWithFloat:r.origin.y], nil];
 }*/
 
 -(BOOL)fullscreen {
@@ -83,7 +83,7 @@ CUJS_FORWARD_INVOCATION_TO(win)
 	return [win setHasShadow:b];
 }
 
--(NSString *)level {
+-(NSS*)level {
 	return @([CUWindow windowLevelNameForLevel:[win level]]);
 }
 
@@ -97,7 +97,7 @@ CUJS_FORWARD_INVOCATION_TO(win)
 		id obj = s;
 		if (![s respondsToSelector:@selector(setException:)])
 			obj = [win.webView windowScriptObject];
-		[obj setException:[NSString stringWithFormat:@"Invalid window level %@", [s description]]];
+		[obj setException:[NSS stringWithFormat:@"Invalid window level %@", [s description]]];
 	}
 }
 

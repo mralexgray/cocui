@@ -7,7 +7,7 @@
 */
 #import <Foundation/Foundation.h>
 #import <Carbon/Carbon.h>
-@interface NSString (CarbonFSRefCreation)
+@interface NSS (CarbonFSRefCreation)
 // Fills in the given FSRef struct so it specifies the file whose path is in this string.
 // If the file doesn't exist, and "createFile" is YES, this method will attempt to create
 // an empty file with the specified path.  (The caller should insure that the directory

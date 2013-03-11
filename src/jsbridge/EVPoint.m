@@ -8,7 +8,7 @@ CUJS_TRANSPOND_NAMES_PLAIN;
 	y = [NSNumber numberWithFloat:st.y];
 	return self;
 }
--(NSString *)description {
-	return [NSString stringWithFormat:@"{x:%@, y:%@}", x, y];
+-(NSS*)description {
+	return [NSS stringWithFormat:@"{x:%@, y:%@}", x, y];
 }
 @end

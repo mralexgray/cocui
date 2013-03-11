@@ -20,7 +20,7 @@
 	NSInteger _levelBeforeFullscreen;
 	NSRect _frameBeforeFullscreen;
 }
-@property(assign) NSString *level;
+@property(assign) NSS *level;
 @property(assign) BOOL shadow;
 @property(assign) BOOL fullscreen;
 @property(readonly) WebScriptObject *window;

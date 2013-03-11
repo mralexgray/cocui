@@ -1,9 +1,12 @@
+
 #import "jsbridge.h"
-id cu_js_forward_invocation(id target, NSString *name, NSArray *args, BOOL strict) {
+
+id cu_js_forward_invocation(id target, NSS *name, NSA *args, BOOL strict) {
+
 	//NSLog(@"invokeUndefinedMethodFromWebScript:%@ withArguments:%@", name, args);
-	NSString *selname = name; // todo transpose js -> objc
-	selname = [selname stringByReplacingOccurrencesOfString:@"_" withString:@":"];
-	selname = [selname stringByReplacingOccurrencesOfString:@"$" withString:@"_"];
+	NSS *selname = name; // todo transpose js -> objc
+			  selname = [selname stringByReplacingOccurrencesOfString:@"_" withString:@":"];
+	  		  selname = [selname stringByReplacingOccurrencesOfString:@"$" withString:@"_"];
 	// todo handle the case of $$ in names (VERY rare, but spec says it can happen)
 	//NSLog(@"selector => %@", selname);
 	SEL sel = NSSelectorFromString(selname);
@@ -16,17 +19,17 @@ id cu_js_forward_invocation(id target, NSString *name, NSArray *args, BOOL stric
 	}
 	if (responds) {
 		NSMethodSignature *msig = [[target class] instanceMethodSignatureForSelector:sel];
-		NSInvocation *inv = [NSInvocation invocationWithMethodSignature:msig];
-		NSUInteger i, count = [args count];
+		NSInvocation       *inv	= [NSInvocation invocationWithMethodSignature:msig];
+		NSUI i, count     	    = args.count;
 		// Indices 0 and 1 indicate the hidden arguments self and _cmd, respectively, thus "+2"
 		for (i = 0; i < count; i++) {
-			id arg = args[i];
+			__unsafe_unretained id arg = args[i];
 			[inv setArgument:(void *)&arg atIndex:i+2];
 		}
 		[inv setSelector:sel];
 		[inv retainArguments];
 		[inv invokeWithTarget:target];
-		id robj = nil;
+		__unsafe_unretained id robj = nil;
 		if ([msig methodReturnLength])
 			[inv getReturnValue:&robj];
 		return robj;

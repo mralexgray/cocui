@@ -22,7 +22,7 @@ CUJS_TRANSPOND_NAMES_PLAIN;
 	NSLog(@"self invoked");
 	return nil;
 }
-- (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSA*)args {
+- (id)invokeUndefinedMethodFromWebScript:(NSS*)name withArguments:(NSA*)args {
 	//NSLog(@"undefined invoked: %@(%@)", name, args);
 	return nil;
 }

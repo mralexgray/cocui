@@ -1,6 +1,8 @@
 
-#import "EVWebView.h"
 #import "CUApp.h"
+
+@interface EVWebView : WebView
+@end
 
 @class WebInspector, WebInspectorWindowController, EVApp;
 extern EVApp *g_app; // global instance of application
@@ -12,8 +14,8 @@ extern EVApp *g_app; // global instance of application
 @property (ASS)	IBOutlet NSTXTV *logTextView;
 @property (NATOM, STRNG)    NSD *logTextAttrs;
 	
-@property (RONLY) WebInspector 					*webInspector;
-@property (STRNG) WebInspectorWindowController 	*webInspectorWindowController;
+@property (NATOM, STRNG) WebInspector 					*webInspector;
+@property (NATOM, STRNG) WebInspectorWindowController 	*webInspectorWindowController;
 
 + (EVApp*) instance;
 - (void)   loadMainScript;
@@ -21,7 +23,7 @@ extern EVApp *g_app; // global instance of application
 -(IBAction) showConsole:(id)sender; // for frontmost win or main if no wins
 -(IBAction) showMainConsole:(id)sender;
 -(IBAction) reloadApp:(id)sender;
-//-(WebInspector*) webInspector;
+-(WebInspector*) webInspector;
 -(void)	dlog:(NSS*)format, ...;
 -(void) dlog:(NSS*)format args:(va_list)args;
 @end
